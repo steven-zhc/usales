@@ -5,11 +5,16 @@ import com.hczhang.usales.um.Customer
 
 class Invoice {
 
-    String id
+    UUID ino
     Date dateCreated
     Customer shippingTo
     Order order
 
     static constraints = {
+
+    }
+
+    static mapping = {
+        ino generator: 'uuid'
     }
 }

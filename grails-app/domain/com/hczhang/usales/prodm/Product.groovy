@@ -2,16 +2,15 @@ package com.hczhang.usales.prodm
 
 class Product {
 
-    String id
     String name
     String description
     String picPath
-    Float listPrice
+    Float listPrice = 0
 
     Category category
 
     static constraints = {
         picPath nullable: true
-
+        description nullable: true
     }
 }

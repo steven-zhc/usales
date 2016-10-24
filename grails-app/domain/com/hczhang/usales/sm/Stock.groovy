@@ -9,5 +9,6 @@ class Stock {
     String location
 
     static constraints = {
+        location nullable: true
     }
 }

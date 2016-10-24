@@ -2,7 +2,6 @@ package com.hczhang.usales.prodm
 
 class Category {
 
-    Integer id
     String name
     String desription
 

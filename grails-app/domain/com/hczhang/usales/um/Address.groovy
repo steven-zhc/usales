@@ -10,5 +10,6 @@ class Address {
     String country
 
     static constraints = {
+        address2 nullable: true
     }
 }

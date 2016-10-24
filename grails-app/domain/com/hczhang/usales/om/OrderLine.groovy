@@ -4,7 +4,6 @@ import com.hczhang.usales.prodm.Product
 
 class OrderLine {
 
-    String id
     Float price
     Integer quantity
     Float lineTotal
