@@ -17,4 +17,21 @@ class Procurement {
     static constraints = {
         note nullable: true
     }
+
+
+    @Override
+    public String toString() {
+        return """\
+Procurement{
+    product=$product,
+    quantity=$quantity,
+    price=$price,
+    tax=$tax,
+    shippingFee=$shippingFee,
+    total=$total,
+    status=$status,
+    dateCreated=$dateCreated,
+    note='$note'
+}"""
+    }
 }

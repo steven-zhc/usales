@@ -13,8 +13,7 @@ class Category {
         desription nullable: true
     }
 
-    @Override
-    String toString() {
+    String getDisplayString() {
         return name
     }
 }

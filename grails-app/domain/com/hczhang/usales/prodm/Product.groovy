@@ -13,4 +13,8 @@ class Product {
         picPath nullable: true
         description nullable: true
     }
+
+    String getDisplayString() {
+        return name
+    }
 }
