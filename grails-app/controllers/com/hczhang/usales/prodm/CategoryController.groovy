@@ -22,19 +22,19 @@ class CategoryController {
         }
     }
 
-    def search(SearchCommand cmd) {
+    def search(SearchCategoryCommand cmd) {
         if (cmd.hasErrors()) {
             ["categories": Category.list()]
         } else {
-            def cs = Category.where {
+            def list = Category.where {
                 name =~ "%${cmd.name}%"
             }.list()
-            ["command": cmd, "categories": cs]
+            ["command": cmd, "categories": list]
         }
     }
 }
 
-class SearchCommand {
+class SearchCategoryCommand {
     String name
 
     static constraints = {
