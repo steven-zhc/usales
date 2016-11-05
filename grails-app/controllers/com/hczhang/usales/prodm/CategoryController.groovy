@@ -13,8 +13,7 @@ class CategoryController {
     def doAdd() {
         def cat = new Category(params)
 
-        if (cat.validate()) {
-            cat.save()
+        if (cat.validate() && cat.save()) {
             redirect action: "search"
         } else {
             flash.message = "Error add Category"

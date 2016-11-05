@@ -2,21 +2,24 @@ package com.hczhang.usales.prodm
 
 class ProductController {
 
-    static scaffold = Product
+//    static scaffold = Product
 
-    def index() { }
+    def index() {}
 
     def search(SearchProductCommand cmd) {
+
         if (cmd.hasErrors()) {
-            ["products": Product.list()]
+            ["cmd": cmd, "categories": Category.list()]
         } else {
             def list = Product.where {
-                name =~ "%${cmd.name}%"
+                if (cmd?.name) {
+                    name =~ "%${cmd.name}%"
+                }
                 if (cmd?.cid) {
-                    category.id = cmd.cid
+                    category.id == cmd.cid
                 }
             }.list()
-            ["command": cmd, "products": list]
+            ["cmd": cmd, "categories": Category.list(), "products": list]
         }
 
     }
@@ -26,21 +29,22 @@ class ProductController {
     }
 
     def save(SaveProductCommand cmd) {
-      if (cmd.hasErrors()) {
-        flash.message = "Error add Product"
-      } else {
-        def p = new Product(cmd.properties)
-        def c = Category.where {
-          id = cmd.cid
-        }.list()
-        p.category = c
+        if (cmd.hasErrors()) {
+            flash.message = "Error add Product"
 
-        if (p.validate() && p.save()) {
-          flash.message = "successful"
         } else {
-          ["product": cmd]
+
+            def p = new Product(cmd.properties)
+            p.category = Category.get(cmd.cid)
+
+            if (p.validate() && p.save()) {
+                flash.message = "successful"
+
+                redirect action: "search"
+            } else {
+                ["cmd": cmd]
+            }
         }
-      }
     }
 }
 
@@ -49,16 +53,18 @@ class SearchProductCommand {
     Integer cid
 
     static constraints = {
-        importFrom Product
+        name (nullable: true)
+        cid (nullable: true)
     }
 }
 
 class SaveProductCommand {
     String name
     String description
-    String picPath
+    // TODO: add upload pic later
+    //String picPath
     Float listPrice
-    Ineger cid
+    Integer cid
 
     static constraints = {
         importFrom Product
