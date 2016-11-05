@@ -40,10 +40,19 @@ class ProductController {
             if (p.validate() && p.save()) {
                 flash.message = "successful"
 
-                redirect action: "search"
+                redirect action: "show", id: p.id
             } else {
                 ["cmd": cmd]
             }
+        }
+    }
+
+    def show() {
+        Product p = Product.findById(params.id)
+        if (p) {
+            ["product": p]
+        } else {
+            response.sendError(404)
         }
     }
 }
