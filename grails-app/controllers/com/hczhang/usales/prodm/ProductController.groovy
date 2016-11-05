@@ -25,8 +25,22 @@ class ProductController {
         ["categories": Category.list()]
     }
 
-    def save() {
+    def save(SaveProductCommand cmd) {
+      if (cmd.hasErrors()) {
+        flash.message = "Error add Product"
+      } else {
+        def p = new Product(cmd.properties)
+        def c = Category.where {
+          id = cmd.cid
+        }.list()
+        p.category = c
 
+        if (p.validate() && p.save()) {
+          flash.message = "successful"
+        } else {
+          ["product": cmd]
+        }
+      }
     }
 }
 
@@ -44,6 +58,7 @@ class SaveProductCommand {
     String description
     String picPath
     Float listPrice
+    Ineger cid
 
     static constraints = {
         importFrom Product
