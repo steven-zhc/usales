@@ -8,6 +8,7 @@ class Order {
     Float tax
     Float shippingFee
     Float total
+    Float profit
     Date dateCreated
     String note
 
@@ -17,5 +18,6 @@ class Order {
 
     static constraints = {
         note nullable: true
+        customer nullable: true
     }
 }
