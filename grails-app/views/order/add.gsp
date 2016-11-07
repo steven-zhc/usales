@@ -1,121 +1,269 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>Create Order</title>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 </head>
+
 <body>
-
-<h1>Create Order</h1>
-
-<g:form action="save">
-
-    <div>
-        <g:submitButton name="submit" value="Create Product"/>
-    </div>
-
-    <div>
-        <label for="name">Date</label>
-        <g:datePicker name="dateCreated" value="${new Date()}"
-                      precision="day"
-                      noSelection="['':'-Choose-']"/>
-    </div>
-
-    <div>
-        <label for="note">Description</label>
-        <g:textArea name="note"/>
-    </div>
-
-    <div>
-        <label for="profit">Profit</label>
-        <g:textField name="profit"/>
-    </div>
-
-    <div>
-        <label for="total">Total Price</label>
-        <g:textField name="total"/>
-    </div>
-    <div>
-        <button id="create-line" type="button">+</button>
-    </div>
-    <div>
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>List Price</th>
-                <th>Discount</th>
-                <th>Sell Price</th>
-                <th>Tax</th>
-                <th>Shipping Fee</th>
-                <th>Total</th>
-                <th>Profit</th>
-            </tr>
-
-        </table>
-    </div>
+    <h1>Create Order</h1>
+    <g:form action="save">
+        <div>
+            <g:submitButton name="submit" value="Create Product" />
+        </div>
+        <div>
+            <label for="name">Date</label>
+            <g:datePicker name="dateCreated" value="${new Date()}" precision="day" noSelection="['':'-Choose-']" />
+        </div>
+        <div>
+            <label for="note">Description</label>
+            <g:textArea name="note" />
+        </div>
+        <div>
+            <label for="profit">Profit</label>
+            <g:textField name="profit" />
+        </div>
+        <div>
+            <label for="total">Total Price</label>
+            <g:textField name="total" />
+        </div>
+        <div>
+            <button id="create_line_btn" type="button">+</button>
+        </div>
+        <div>
+            <table id="order_table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>List Price</th>
+                        <th>Discount</th>
+                        <th>Sell Price</th>
+                        <th>Tax</th>
+                        <th>Shipping Fee</th>
+                        <th>Total</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </g:form>
     <div id="line-form" title="Add an Order Line">
-        <div>
-            <label for="d_pid">Product</label>
-            <select id="d_pid">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="d_quantity">Quantity</label>
-            <input type="text" id="d_quantity" value="1"/>
-        </div>
-
-        <div>
-            <label for="d_list_price">List Price</label>
-            <input type="text" id="d_list_price" readonly/>
-        </div>
-
-        <div>
-            <label for="d_discount">Discount</label>
-            <input type="text" id="d_discount">
-        </div>
-
-        <div>
-            <label for="d_sell_price">Sell Price</label>
-            <input type="text" id="d_sell_price"/>
-        </div>
-        <div>
-            <span>0%</span><input type="range" id="d_percentage" min="0" max="100"/><span>100%</span>
-        </div>
-
-        <div>
-            <label for="d_tax">Tax</label>
-            <input type="text" id="d_tax" readonly/>
-        </div>
-
-        <div>
-            <label for="d_shipping">Shipping Fee</label>
-            <input type="text" id="d_shipping" value="0.00"/>
-        </div>
-
-        <div>
-            <label for="d_total">Total</label>
-            <input type="text" id="d_total" readonly/>
-        </div>
-
-        <div>
-            <label for="d_profit">Profit</label>
-            <input type="text" id="d_profit" readonly/>
-        </div>
-
+        <form>
+            <div>
+                <label for="d_name">Product</label>
+                <select id="d_name">
+                    
+                </select>
+            </div>
+            <div>
+                <label for="d_quantity">Quantity</label>
+                <input type="text" id="d_quantity" value="1" />
+            </div>
+            <div>
+                <label for="d_list_price">List Price</label>
+                <input type="text" id="d_list_price" readonly/>
+            </div>
+            <div>
+                <label for="d_discount">Discount Price</label>
+                <input type="text" id="d_discount">
+            </div>
+            <div>
+                <input type="range" id="d_slider" min="0" max="100" value="0" />
+                <input id="d_perc" type="text" value="0" size="2"/><span>%</span>
+            </div>
+            <div>
+                <label for="d_sell_price">Sell Price</label>
+                <input type="text" id="d_sell_price" />
+            </div>
+            <div>
+                <label for="d_tax">Tax</label>
+                <input type="text" id="d_tax" readonly/>
+            </div>
+            <div>
+                <label for="d_shipping">Shipping Fee</label>
+                <input type="text" id="d_shipping" value="0.00" />
+            </div>
+            <div>
+                <label for="d_total">Total</label>
+                <input type="text" id="d_total" readonly/>
+            </div>
+            <div>
+                <label for="d_profit">Profit</label>
+                <input type="text" id="d_profit" readonly/>
+            </div>
+        </form>
     </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+                
+    var products = {
+        "list": [
+            {"id": 1, "name": "volvo", "price":"10.00"},
+            {"id": 2, "name": "mercedes", "price":"20.00"},
+            {"id": 3, "name": "audi", "price":"18.00"}
+        ]
+    }
+    $( function() {
+        var dialog, lineForm,
+        name = $("#d_name"),
+        quantity = $("#d_quantity"),
+        listPrice = $("#d_list_price"),
+        discount = $("#d_discount"),
+        slider = $("#d_slider"),
+        perc = $("#d_perc"),
+        sellPrice = $("#d_sell_price"),
+        tax = $("#d_tax"),
+        shipping = $("#d_shipping"),
+        total = $("#d_total"),
+        profit = $("#d_profit"),
+        allFields = $([]).add(name).add(quantity).add(listPrice)
+            .add(discount).add(sellPrice)
+            .add(tax).add(shipping).add(total).add(profit);
 
-</g:form>
+        $.each(products.list, function(i, p){
+            name.append($('<option>').text(p.name).attr('value', p.id));
+        });
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
+        function calculateTax(n) {
+            return n * 0.0875;
+        }
+
+        function calculatePrice(quantity, price, shipping) {
+            return quantity * price + calculateTax(price) + shipping;
+        }
+
+        function getSellTotalVal() {
+            var p = calculatePrice(
+                parseInt(quantity.val()), 
+                parseFloat(sellPrice.val()), 
+                parseFloat(shipping.val())
+            );
+
+            return p.toFixed(2);
+        }
+
+        function getRealTotalVal() {
+            var p = calculatePrice(
+                parseInt(quantity.val()),
+                parseFloat(discount.val()),
+                parseFloat(shipping.val())
+            );
+
+            return p.toFixed(2);
+        }
+
+        function refreshTotalUI() {
+            var t1 = getSellTotalVal();
+            var t2 = getRealTotalVal();
+
+            total.val(t1);
+            profit.val((t1 - t2).toFixed(2));
+        }
+
+        name.change(function() {
+            var pid = name.find(":selected").val();
+            $.each(products.list, function(i, p){
+                if (p.id == pid) {
+                    listPrice.val(p.price);
+                    discount.val(p.price);
+                    sellPrice.val(p.price);
+                    tax.val(calculateTax(p.price).toFixed(2));
+                    
+                    refreshTotalUI();
+
+                    return;
+                }
+            });
+        });
+
+        quantity.change(function() {
+            refreshTotalUI();
+        });
+
+        discount.change(function() {
+            refreshPercentageUI(perc.val());
+        });
+        
+        function refreshPercentageUI(pv) {
+            slider.val(pv);
+            perc.val(pv);
+            var p = discount.val() * (1 + pv / 100);
+            sellPrice.val(p.toFixed(2));
+
+            tax.val(calculateTax(p).toFixed(2));
+
+            refreshTotalUI();
+        }
+
+        slider.change(function() {
+            refreshPercentageUI(slider.val());
+        });
+        perc.change(function() {
+            refreshPercentageUI(perc.val());
+        });
+        
+        sellPrice.change(function() {
+            var n = 100 - discount.val() / sellPrice.val() * 100;
+            slider.val(n.toFixed(0));
+            perc.val(n.toFixed(0));
+            tax.val(calculateTax(sellPrice.val()).toFixed(2));
+
+            refreshTotalUI();
+        });
+
+        shipping.change(refreshTotalUI);
+        
+        function addLine() {
+            $("#order_table tbody").append(
+                "<tr>" + 
+                "<td>" + name.find(":selected").text() + "</td>" +
+                "<td>" + quantity.val()  + "</td>" +
+                "<td>" + listPrice.val() + "</td>" +
+                "<td>" + discount.val()  + "</td>" +
+                "<td>" + sellPrice.val() + "</td>" +
+                "<td>" + tax.val()       + "</td>" +
+                "<td>" + shipping.val()  + "</td>" +
+                "<td>" + total.val()     + "</td>" +
+                "<td>" + profit.val()    + "</td>" +
+                "</tr>"
+            );
+            dialog.dialog("close");
+        }
+
+        dialog = $("#line-form").dialog({
+            autoOpen: false,
+            height: 470,
+            width: 450,
+            modal: true,
+            buttons: {
+                "Add a Line": addLine,
+                Cancel: function() {
+                    dialog.dialog("close");
+                }
+            },
+            close: function() {
+                
+            }
+        });
+
+        lineForm = $("#line-form").children("form").on("submit", function(event) {
+            addLine();
+        });
+
+        $("#create_line_btn").button().on("click", function() {
+            dialog.dialog("open");
+        });
+        
+    });
+
 
 </script>
 </body>
+
 </html>
