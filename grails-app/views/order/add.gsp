@@ -10,7 +10,7 @@
     <h1>Create Order</h1>
     <g:form action="save">
         <div>
-            <g:submitButton name="submit" value="Create Product" />
+            <g:submitButton name="submit" value="Create Product" class="ui-button ui-corner-all ui-widget" />
         </div>
         <div>
             <label for="name">Date</label>
@@ -20,35 +20,35 @@
             <label for="note">Description</label>
             <g:textArea name="note" />
         </div>
-        <div>
-            <label for="profit">Profit</label>
-            <g:textField name="profit" />
-        </div>
-        <div>
-            <label for="total">Total Price</label>
-            <g:textField name="total" />
-        </div>
+
         <div>
             <button id="create_line_btn" type="button">+</button>
         </div>
+
+        <table id="order_table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>List Price</th>
+                    <th>Discount Price</th>
+                    <th>Sell Price</th>
+                    <th>Tax</th>
+                    <th>Shipping Fee</th>
+                    <th>Total</th>
+                    <th>Profit</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
         <div>
-            <table id="order_table">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>List Price</th>
-                        <th>Discount</th>
-                        <th>Sell Price</th>
-                        <th>Tax</th>
-                        <th>Shipping Fee</th>
-                        <th>Total</th>
-                        <th>Profit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <label for="profit">Total Profit</label>
+            <input type="text" id="profit" size="9" readonly />
+        </div>
+        <div>
+            <label for="total">Total Price</label>
+            <input type="text" id="total" size="9" readonly />
         </div>
     </g:form>
     <div id="line-form" title="Add an Order Line">
