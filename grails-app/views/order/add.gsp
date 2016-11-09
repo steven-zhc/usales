@@ -13,11 +13,11 @@
             <g:submitButton name="submit" value="Create Product" class="ui-button ui-corner-all ui-widget" />
         </div>
         <div>
-            <label for="name">Date</label>
+            <label for="dateCreated">Date</label>
             <g:datePicker name="dateCreated" value="${new Date()}" precision="day" noSelection="['':'-Choose-']" />
         </div>
         <div>
-            <label for="note">Description</label>
+            <label for="note">Note</label>
             <g:textArea name="note" />
         </div>
 
@@ -43,12 +43,12 @@
             </tbody>
         </table>
         <div>
-            <label for="profit">Total Profit</label>
-            <input type="text" id="profit" size="9" readonly />
-        </div>
-        <div>
             <label for="total">Total Price</label>
             <input type="text" id="total" size="9" readonly />
+        </div>
+        <div>
+            <label for="profit">Total Profit</label>
+            <input type="text" id="profit" size="9" readonly />
         </div>
     </g:form>
     <div id="line-form" title="Add an Order Line">
@@ -56,7 +56,7 @@
             <div>
                 <label for="d_name">Product</label>
                 <select id="d_name">
-                    
+                    <option value="">Select one product ...</option>
                 </select>
             </div>
             <div>
@@ -102,13 +102,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script>
                 
-    var products = {
-        "list": [
-            {"id": 1, "name": "volvo", "price":"10.00"},
-            {"id": 2, "name": "mercedes", "price":"20.00"},
-            {"id": 3, "name": "audi", "price":"18.00"}
-        ]
-    }
+    var products = ${products.encodeAsRaw()}
+    
     $( function() {
         var dialog, lineForm,
         name = $("#d_name"),
@@ -135,7 +130,7 @@
         }
 
         function calculatePrice(quantity, price, shipping) {
-            return quantity * price + calculateTax(price) + shipping;
+            return quantity * (price + calculateTax(price)) + shipping;
         }
 
         function getSellTotalVal() {
@@ -220,20 +215,24 @@
         shipping.change(refreshTotalUI);
         
         function addLine() {
+            var row = $("#order_table tbody tr").length;
+
             $("#order_table tbody").append(
                 "<tr>" + 
-                "<td>" + name.find(":selected").text() + "</td>" +
-                "<td>" + quantity.val()  + "</td>" +
-                "<td>" + listPrice.val() + "</td>" +
-                "<td>" + discount.val()  + "</td>" +
-                "<td>" + sellPrice.val() + "</td>" +
-                "<td>" + tax.val()       + "</td>" +
-                "<td>" + shipping.val()  + "</td>" +
-                "<td>" + total.val()     + "</td>" +
-                "<td>" + profit.val()    + "</td>" +
+                "<td><input          id='lines[" + row + "].name' type='text' value='" + name.find(":selected").text() + "' readonly/></td>" +
+                "<td><input size='8' id='lines[" + row + "].quantity' type='text' value='" + quantity.val()  + "' /></td>" +
+                "<td><input size='8' id='lines[" + row + "].listPrice' type='text' value='" + listPrice.val() + "' /></td>" +
+                "<td><input size='8' id='lines[" + row + "].discountPrice' type='text' value='" + discount.val()  + "' /></td>" +
+                "<td><input size='8' id='lines[" + row + "].sellPrice' type='text' value='" + sellPrice.val() + "' /></td>" +
+                "<td><input size='8' id='lines[" + row + "].tax' type='text' value='" + tax.val()       + "' /></td>" +
+                "<td><input size='8' id='lines[" + row + "].shippingFee' type='text' value='" + shipping.val()  + "' /></td>" +
+                "<td><input size='8' id='lines[" + row + "].lineTotal' type='text' value='" + total.val()     + "' /></td>" +
+                "<td><input size='8' id='lines[" + row + "].lineProfit' type='text' value='" + profit.val()    + "' /></td>" +
                 "</tr>"
             );
             dialog.dialog("close");
+
+            updateOrderUI();
         }
 
         dialog = $("#line-form").dialog({
@@ -259,6 +258,25 @@
         $("#create_line_btn").button().on("click", function() {
             dialog.dialog("open");
         });
+
+        function updateOrderUI() {
+            var sum = 0.0;
+            $("#order_table tbody tr").each(function(){
+                var v = parseFloat($(this).find("td:nth-last-child(2) input").val());
+                sum += v;
+            });
+
+            $("#total").val(sum);
+
+            sum = 0.0
+            $("#order_table tbody tr").each(function(){
+                sum += parseFloat($(this).find("td:last input").val());
+            });
+
+            $("#profit").val(sum);
+
+        }
+
         
     });
 
