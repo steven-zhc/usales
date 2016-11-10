@@ -22,7 +22,7 @@ class OrderController {
     def save(OrderCommand cmd) {
 
         if (cmd.hasErrors()) {
-            flash.message = "Error add Order"
+            flash.message = "Error add Order."
         } else {
             def order = new Order(cmd.properties)
 
