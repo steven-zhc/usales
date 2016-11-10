@@ -14,7 +14,11 @@
         </div>
         <div>
             <label for="dateCreated">Date</label>
-            <g:datePicker name="dateCreated" value="${new Date()}" precision="day" noSelection="['':'-Choose-']" />
+            <input id="dateCreated" type="date" value="${new Date().format('MM/dd/yyyy')}" />
+        </div>
+        <div>
+            <label for="deliverFee">Deliver Fee</label>
+            <input type="text" id="deliverFee" value="0.00"/>
         </div>
         <div>
             <label for="note">Note</label>
@@ -218,10 +222,12 @@
             var row = $("#order_table tbody tr").length;
 
             $("#order_table tbody").append(
-                "<tr>" + 
-                "<td><input          id='lines[" + row + "].name' type='text' value='" + name.find(":selected").text() + "' readonly/></td>" +
-                "<td><input size='8' id='lines[" + row + "].quantity' type='text' value='" + quantity.val()  + "' /></td>" +
-                "<td><input size='8' id='lines[" + row + "].listPrice' type='text' value='" + listPrice.val() + "' /></td>" +
+                "<tr><td>" + 
+                "<span>" + name.find(":selected").text() + "</span>" + 
+                "<input              id='lines[" + row + "].pid' type='hidden' value='" + name.find(":selected").val() + "'/>" +
+                "</td>" +
+                "<td><input size='8' id='lines[" + row + "].quantity' type='number' value='" + quantity.val()  + "' /></td>" +
+                "<td><span>" + listPrice.val() + "</span></td>" +
                 "<td><input size='8' id='lines[" + row + "].discountPrice' type='text' value='" + discount.val()  + "' /></td>" +
                 "<td><input size='8' id='lines[" + row + "].sellPrice' type='text' value='" + sellPrice.val() + "' /></td>" +
                 "<td><input size='8' id='lines[" + row + "].tax' type='text' value='" + tax.val()       + "' /></td>" +
