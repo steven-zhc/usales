@@ -17,6 +17,8 @@ class OrderLine {
     static belongsTo = [order : Order]
 
     static constraints = {
-
+        product nullable: false
+        quantity size: 1..1000
+        tax nullable: false, validator: {val, OrderLine obj -> val <= obj.sellPrice}
     }
 }

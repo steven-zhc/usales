@@ -1,7 +1,5 @@
 package com.hczhang.usales.om
 
-import com.hczhang.usales.um.Customer
-
 class Order {
 
     Integer status = 0
@@ -17,6 +15,10 @@ class Order {
 
     static constraints = {
         note nullable: true
+    }
 
+    static mapping = {
+        table '`order`'
+        status column: '`status`'
     }
 }

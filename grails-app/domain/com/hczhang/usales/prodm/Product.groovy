@@ -10,6 +10,7 @@ class Product {
     Category category
 
     static constraints = {
+        name nullable: false, size: 2..30
         picPath nullable: true
         description nullable: true
     }
