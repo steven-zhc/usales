@@ -2,7 +2,7 @@ package com.hczhang.usales.om
 
 class Order {
 
-    Integer status = 0
+    OrderStatus status
     Float deliverFee
     Float total
     Float profit
@@ -19,7 +19,7 @@ class Order {
 
     static mapping = {
         table '`order`'
-        status column: '`status`'
+        status column: '`status`', defaultValue: OrderStatus.INQUIRE
     }
 
 
@@ -34,5 +34,19 @@ Order{
     dateCreated=$dateCreated,
     note='$note'
 }"""
+    }
+}
+
+enum OrderStatus {
+    CANCEL(-1), INQUIRE(0), PROCESS(1), SHIPPING(2), COMPLETE(3)
+
+    private final int s
+
+    OrderStatus(int s) {
+        this.s = s
+    }
+
+    int getStatus() {
+        return s
     }
 }
