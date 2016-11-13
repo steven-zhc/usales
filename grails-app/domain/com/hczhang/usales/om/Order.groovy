@@ -21,4 +21,18 @@ class Order {
         table '`order`'
         status column: '`status`'
     }
+
+
+    @Override
+    public String toString() {
+        return """\
+Order{
+    status=$status,
+    deliverFee=$deliverFee,
+    total=$total,
+    profit=$profit,
+    dateCreated=$dateCreated,
+    note='$note'
+}"""
+    }
 }

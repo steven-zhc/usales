@@ -23,19 +23,36 @@ class OrderController {
 
         if (cmd.hasErrors()) {
             flash.message = "Error add Order."
-        } else {
-            def order = new Order(cmd.properties)
+            redirect action: "add"
+            return
+        }
+        def order = new Order(cmd.properties)
+        order.dateCreated = Date.parse("MM/dd/yyyy", cmd.date)
 
-            for ( l in cmd.lines ) {
-                def line = new OrderLine(l.properties)
-                line.product = Product.get(l.pid)
+        println order
 
-                order.addToLines(line)
-            }
+        for (l in cmd.items) {
+            def line = new OrderLine(l.properties)
+            line.product = Product.get(l.pid)
 
-            order.save()
+            order.addToLines(line)
+
+            println line
         }
 
+        order.save(failOnError: true)
+        redirect action: "show", id: order.id
+
+
+    }
+
+    def show() {
+//        Order o = Order.findById(params.id)
+//        if (o) {
+//            ["order", o]
+//        } else {
+//            response.senError(404)
+//        }
     }
 
 }
@@ -51,16 +68,24 @@ class LineCommand {
     Float lineTotal
     Float lineProfit
 
+    static constraints = {
+        importFrom OrderLine
+    }
+
 }
 
 class OrderCommand {
 
-    Date dateCreated
+    String date
     Float deliverFee
     String note
     Float total
     Float profit
 
-    List<LineCommand> lines
+    List<LineCommand> items
+
+    static constraints = {
+        importFrom Order
+    }
 
 }

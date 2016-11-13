@@ -18,4 +18,16 @@ class Product {
     String getDisplayString() {
         return name
     }
+
+    @Override
+    public String toString() {
+        return """\
+Product{
+    name='$name',
+    description='$description',
+    picPath='$picPath',
+    listPrice=$listPrice,
+    category=$category
+}"""
+    }
 }

@@ -8,21 +8,21 @@
 
 <body>
     <h1>Create Order</h1>
-    <g:form action="save">
+    <form action="/order/save" method="post" >
         <div>
-            <g:submitButton name="submit" value="Create Product" class="ui-button ui-corner-all ui-widget" />
+            <button type="submit">Create Order</button>
         </div>
         <div>
-            <label for="dateCreated">Date</label>
-            <input id="dateCreated" type="date" value="${new Date().format('MM/dd/yyyy')}" />
+            <label for="date">Date</label>
+            <input id="dateCreated" name="date" value="${new Date().format('MM/dd/yyyy')}" />
         </div>
         <div>
             <label for="deliverFee">Deliver Fee</label>
-            <input type="text" id="deliverFee" value="0.00"/>
+            <input type="text" id="deliverFee" name="deliverFee" value="0.00"/>
         </div>
         <div>
             <label for="note">Note</label>
-            <g:textArea name="note" />
+            <textarea name="note" id="note" ></textarea>
         </div>
 
         <div>
@@ -48,13 +48,13 @@
         </table>
         <div>
             <label for="total">Total Price</label>
-            <input type="text" id="total" size="9" readonly />
+            <input type="text" id="total" name="total" size="9" value="0.00" readonly />
         </div>
         <div>
             <label for="profit">Total Profit</label>
-            <input type="text" id="profit" size="9" readonly />
+            <input type="text" id="profit" name="profit" size="9" value="0.00" readonly />
         </div>
-    </g:form>
+    </form>
     <div id="line-form" title="Add an Order Line">
         <form>
             <div>
@@ -224,16 +224,16 @@
             $("#order_table tbody").append(
                 "<tr><td>" + 
                 "<span>" + name.find(":selected").text() + "</span>" + 
-                "<input              id='lines[" + row + "].pid' type='hidden' value='" + name.find(":selected").val() + "'/>" +
+                "<input              name='items[" + row + "].pid' type='hidden' value='" + name.find(":selected").val() + "'/>" +
                 "</td>" +
-                "<td><input size='8' id='lines[" + row + "].quantity' type='number' value='" + quantity.val()  + "' /></td>" +
+                "<td><input size='3' name='items[" + row + "].quantity' type='number' value='" + quantity.val()  + "' /></td>" +
                 "<td><span>" + listPrice.val() + "</span></td>" +
-                "<td><input size='8' id='lines[" + row + "].discountPrice' type='text' value='" + discount.val()  + "' /></td>" +
-                "<td><input size='8' id='lines[" + row + "].sellPrice' type='text' value='" + sellPrice.val() + "' /></td>" +
-                "<td><input size='8' id='lines[" + row + "].tax' type='text' value='" + tax.val()       + "' /></td>" +
-                "<td><input size='8' id='lines[" + row + "].shippingFee' type='text' value='" + shipping.val()  + "' /></td>" +
-                "<td><input size='8' id='lines[" + row + "].lineTotal' type='text' value='" + total.val()     + "' /></td>" +
-                "<td><input size='8' id='lines[" + row + "].lineProfit' type='text' value='" + profit.val()    + "' /></td>" +
+                "<td><input size='8' name='items[" + row + "].discountPrice' type='text' value='" + discount.val()  + "' /></td>" +
+                "<td><input size='8' name='items[" + row + "].sellPrice' type='text' value='" + sellPrice.val() + "' /></td>" +
+                "<td><input size='8' name='items[" + row + "].tax' type='text' value='" + tax.val()       + "' /></td>" +
+                "<td><input size='8' name='items[" + row + "].shippingFee' type='text' value='" + shipping.val()  + "' /></td>" +
+                "<td><input size='8' name='items[" + row + "].lineTotal' type='text' value='" + total.val()     + "' /></td>" +
+                "<td><input size='8' name='items[" + row + "].lineProfit' type='text' value='" + profit.val()    + "' /></td>" +
                 "</tr>"
             );
             dialog.dialog("close");
