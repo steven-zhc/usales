@@ -47,12 +47,12 @@ class OrderController {
     }
 
     def show() {
-//        Order o = Order.findById(params.id)
-//        if (o) {
-//            ["order", o]
-//        } else {
-//            response.senError(404)
-//        }
+        Order o = Order.findById(params.id)
+        if (o) {
+            ["order": o]
+        } else {
+            response.senError(404)
+        }
     }
 
 }
@@ -67,6 +67,7 @@ class LineCommand {
     Float shippingFee
     Float lineTotal
     Float lineProfit
+    String note
 
     static constraints = {
         importFrom OrderLine

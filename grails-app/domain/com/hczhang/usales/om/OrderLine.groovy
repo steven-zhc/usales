@@ -11,6 +11,8 @@ class OrderLine {
     Float shippingFee
     Float lineTotal
     Float lineProfit
+    Date dateCreated
+    String note
 
     Product product
 
@@ -20,8 +22,8 @@ class OrderLine {
         product nullable: false
         quantity size: 1..1000
         tax nullable: false, validator: {val, OrderLine obj -> val <= obj.sellPrice}
+        note nullable: true
     }
-
 
     @Override
     public String toString() {
@@ -34,6 +36,8 @@ OrderLine{
     shippingFee=$shippingFee,
     lineTotal=$lineTotal,
     lineProfit=$lineProfit,
+    dateCreated=$dateCreated,
+    note='$note',
     product=$product
 }"""
     }

@@ -14,7 +14,7 @@
         </div>
         <div>
             <label for="date">Date</label>
-            <input id="dateCreated" name="date" value="${new Date().format('MM/dd/yyyy')}" />
+            <input id="date" name="date" value="${new Date().format('MM/dd/yyyy')}" />
         </div>
         <div>
             <label for="deliverFee">Deliver Fee</label>
@@ -41,6 +41,7 @@
                     <th>Shipping Fee</th>
                     <th>Total</th>
                     <th>Profit</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,6 +99,10 @@
             <div>
                 <label for="d_profit">Profit</label>
                 <input type="text" id="d_profit" readonly/>
+            </div>
+            <div>
+                <label for="d_note">Note</label>
+                <input type="text" id="d_note" />
             </div>
         </form>
     </div>
