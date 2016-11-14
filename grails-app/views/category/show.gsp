@@ -27,6 +27,7 @@
 
     <div>
         <a href="/category/add">New Category</a>
+        <a href="/product/add">New Product</a>
     </div>
 </section>
 </body>

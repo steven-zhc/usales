@@ -5,7 +5,7 @@
 </head>
 <body>
 <div>
-    <legend>Search for Product</legend>
+    <h1>Search for Product</h1>
     <g:form action="search">
         <label for="name">Product Name</label>
         <g:textField name="name" value="${cmd?.name}"/>

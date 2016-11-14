@@ -18,7 +18,7 @@
 <form action="/category/save" method="post">
     <div>
         <label for="name">Category Name</label>
-        <textarea id="name" name="name" value="${category?.name}"></textarea>
+        <input type="text" id="name" name="name" value="${category?.name}" />
     </div>
 
     <div>

@@ -1,39 +1,57 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:g="http://www.w3.org/1999/xhtml">
 <head>
     <title>Create Product</title>
 </head>
 <body>
 
-<h1>Create Category</h1>
-<g:form action="save">
+<h1>Create Product</h1>
+
+<g:renderErrors bean="${cmd}">
+    <ul>
+        <g:eachError var="err" bean="${cmd}">
+            <li>${err}</li>
+        </g:eachError>
+    </ul>
+</g:renderErrors>
+
+<g:renderErrors bean="${model}">
+    <ul>
+        <g:eachError var="err" bean="${model}">
+            <li>${err}</li>
+        </g:eachError>
+    </ul>
+</g:renderErrors>
+
+<form action="/product/save" method="post">
     <div>
         <label for="name">Product Name</label>
-        <g:textField name="name"/>
+        <input type="text" id="name" name="name"/>
     </div>
 
     <div>
         <label for="cid">Category</label>
         <g:select name="cid" optionKey="id" optionValue="name" from="${categories}"
                   noSelection="${['':'Select One...']}"/>
+
+        <a href="/category/add">New Category</a>
     </div>
 
     <div>
         <label for="listPrice">List Price</label>
-        <g:textField name="listPrice"/>
+        <input type="text" id="listPrice" name="listPrice"/>
     </div>
 
     <div>
         <label for="description">Description</label>
-        <g:textArea name="description"/>
+        <textarea name="description" id="description" cols="30" rows="10"></textarea>
     </div>
 
     <div>
-        <g:submitButton name="submit" value="Create Product"/>
+        <button type="submit">Create Product</button>
     </div>
 
-</g:form>
-
+</form>
 
 </body>
 </html>

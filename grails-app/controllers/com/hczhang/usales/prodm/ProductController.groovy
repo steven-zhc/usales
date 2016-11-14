@@ -29,22 +29,21 @@ class ProductController {
     }
 
     def save(SaveProductCommand cmd) {
+
         if (cmd.hasErrors()) {
-            flash.message = "Error add Product"
-
-        } else {
-
-            def p = new Product(cmd.properties)
-            p.category = Category.get(cmd.cid)
-
-            if (p.validate() && p.save()) {
-                flash.message = "successful"
-
-                redirect action: "show", id: p.id
-            } else {
-                ["cmd": cmd]
-            }
+            render view: "add", model: ["cmd": cmd]
         }
+
+        def p = new Product(cmd.properties)
+        p.category = Category.get(cmd.cid)
+
+        if (p.save()) {
+            flash.message = "Added a new Product."
+            redirect action: "show", id: p.id
+        } else {
+            render view: "add", model: ["model": p]
+        }
+
     }
 
     def show() {
@@ -52,7 +51,7 @@ class ProductController {
         if (p) {
             ["product": p]
         } else {
-            response.sendError(404)
+            ["message": "Not Found."]
         }
     }
 }
@@ -62,8 +61,8 @@ class SearchProductCommand {
     Integer cid
 
     static constraints = {
-        name (nullable: true)
-        cid (nullable: true)
+        name(nullable: true)
+        cid(nullable: true)
     }
 }
 
