@@ -17,13 +17,11 @@
         <table>
             <tr>
                 <th>Name</th>
-                <th>Description</th>
                 <th>Parent</th>
             </tr>
             <g:each var="c" in="${categories}">
             <tr>
                 <td>${c.name}</td>
-                <td>${c.description}</td>
                 <td>${c.parent?.name}</td>
             </tr>
             </g:each>

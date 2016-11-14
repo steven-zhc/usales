@@ -20,11 +20,6 @@
     </div>
 
     <div class="form-group">
-        <label for="description" class="col-sm-2 control-label">Description</label>
-        <g:textArea name="description" value="${category?.description}" class="form-control"/>
-    </div>
-
-    <div class="form-group">
         <g:submitButton name="submit" value="Create Category" class="btn btn-default"/>
     </div>
 
