@@ -2,26 +2,26 @@ package com.hczhang.usales.om
 
 class Order {
 
-    OrderStatus status
-    Float deliverFee
+    Integer status = 1
+    Float deliverFee = 0.0f
     Float total
     Float profit
     Date dateCreated
     String note
 
-//  Customer customer
-
     static hasMany = [lines : OrderLine]
 
     static constraints = {
         note nullable: true
+        status defaultValue: 1
     }
 
     static mapping = {
         table '`order`'
-        status column: '`status`', defaultValue: OrderStatus.INQUIRE
-    }
 
+        deliverFee defaultValue: 0
+        status column: '`status`'
+    }
 
     @Override
     public String toString() {
@@ -34,19 +34,5 @@ Order{
     dateCreated=$dateCreated,
     note='$note'
 }"""
-    }
-}
-
-enum OrderStatus {
-    CANCEL(-1), INQUIRE(0), PROCESS(1), SHIPPING(2), COMPLETE(3)
-
-    private final int s
-
-    OrderStatus(int s) {
-        this.s = s
-    }
-
-    int getStatus() {
-        return s
     }
 }

@@ -7,109 +7,126 @@
 </head>
 
 <body>
-    <h1>Create Order</h1>
-    <form action="/order/save" method="post" >
-        <div>
-            <button type="submit">Create Order</button>
-        </div>
-        <div>
-            <label for="date">Date</label>
-            <input id="date" name="date" value="${new Date().format('MM/dd/yyyy')}" />
-        </div>
-        <div>
-            <label for="deliverFee">Deliver Fee</label>
-            <input type="text" id="deliverFee" name="deliverFee" value="0.00"/>
-        </div>
-        <div>
-            <label for="note">Note</label>
-            <textarea name="note" id="note" ></textarea>
-        </div>
+<h1>Create Order</h1>
+<g:renderErrors bean="${cmd}">
+    <ul>
+        <g:eachError var="err" bean="${cmd}">
+            <li>${err}</li>
+        </g:eachError>
+    </ul>
+</g:renderErrors>
 
-        <div>
-            <button id="create_line_btn" type="button">+</button>
-        </div>
+<g:renderErrors bean="${model}">
+    <ul>
+        <g:eachError var="err" bean="${model}">
+            <li>${err}</li>
+        </g:eachError>
+    </ul>
+</g:renderErrors>
 
-        <table id="order_table">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>List Price</th>
-                    <th>Discount Price</th>
-                    <th>Sell Price</th>
-                    <th>Tax</th>
-                    <th>Shipping Fee</th>
-                    <th>Total</th>
-                    <th>Profit</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+<form action="/order/save" method="post">
+
+    <div>
+        <label for="date">Date</label>
+        <input id="date" name="date" value="${new Date().format('MM/dd/yyyy')}"/>
+    </div>
+    <div>
+        <label for="deliverFee">Deliver Fee</label>
+        <input type="text" id="deliverFee" name="deliverFee" value="0.00"/>
+    </div>
+    <div>
+        <label for="note">Note</label>
+        <textarea name="note" id="note"></textarea>
+    </div>
+
+    <div>
+        <button id="create_line_btn" type="button">+</button>
+    </div>
+
+    <table id="order_table">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>List Price</th>
+            <th>Discount Price</th>
+            <th>Sell Price</th>
+            <th>Tax</th>
+            <th>Shipping Fee</th>
+            <th>Total</th>
+            <th>Profit</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div>
+        <label for="total">Total Price</label>
+        <input type="text" id="total" name="total" size="9" value="0.00" readonly/>
+    </div>
+    <div>
+        <label for="profit">Total Profit</label>
+        <input type="text" id="profit" name="profit" size="9" value="0.00" readonly/>
+    </div>
+
+    <div>
+        <button type="submit">Create Order</button>
+    </div>
+</form>
+<div id="line-form" title="Add an Order Line">
+    <form>
         <div>
-            <label for="total">Total Price</label>
-            <input type="text" id="total" name="total" size="9" value="0.00" readonly />
+            <label for="d_name">Product</label>
+            <select id="d_name">
+                <option value="">Select one product ...</option>
+            </select>
         </div>
         <div>
-            <label for="profit">Total Profit</label>
-            <input type="text" id="profit" name="profit" size="9" value="0.00" readonly />
+            <label for="d_quantity">Quantity</label>
+            <input type="text" id="d_quantity" value="1"/>
+        </div>
+        <div>
+            <label for="d_list_price">List Price</label>
+            <input type="text" id="d_list_price" readonly/>
+        </div>
+        <div>
+            <label for="d_discount">Discount Price</label>
+            <input type="text" id="d_discount">
+        </div>
+        <div>
+            <input type="range" id="d_slider" min="0" max="100" value="0"/>
+            <input id="d_perc" type="text" value="0" size="2"/><span>%</span>
+        </div>
+        <div>
+            <label for="d_sell_price">Sell Price</label>
+            <input type="text" id="d_sell_price"/>
+        </div>
+        <div>
+            <label for="d_tax">Tax</label>
+            <input type="text" id="d_tax" readonly/>
+        </div>
+        <div>
+            <label for="d_shipping">Shipping Fee</label>
+            <input type="text" id="d_shipping" value="0.00"/>
+        </div>
+        <div>
+            <label for="d_total">Total</label>
+            <input type="text" id="d_total" readonly/>
+        </div>
+        <div>
+            <label for="d_profit">Profit</label>
+            <input type="text" id="d_profit" readonly/>
+        </div>
+        <div>
+            <label for="d_note">Note</label>
+            <input type="text" id="d_note"/>
         </div>
     </form>
-    <div id="line-form" title="Add an Order Line">
-        <form>
-            <div>
-                <label for="d_name">Product</label>
-                <select id="d_name">
-                    <option value="">Select one product ...</option>
-                </select>
-            </div>
-            <div>
-                <label for="d_quantity">Quantity</label>
-                <input type="text" id="d_quantity" value="1" />
-            </div>
-            <div>
-                <label for="d_list_price">List Price</label>
-                <input type="text" id="d_list_price" readonly/>
-            </div>
-            <div>
-                <label for="d_discount">Discount Price</label>
-                <input type="text" id="d_discount">
-            </div>
-            <div>
-                <input type="range" id="d_slider" min="0" max="100" value="0" />
-                <input id="d_perc" type="text" value="0" size="2"/><span>%</span>
-            </div>
-            <div>
-                <label for="d_sell_price">Sell Price</label>
-                <input type="text" id="d_sell_price" />
-            </div>
-            <div>
-                <label for="d_tax">Tax</label>
-                <input type="text" id="d_tax" readonly/>
-            </div>
-            <div>
-                <label for="d_shipping">Shipping Fee</label>
-                <input type="text" id="d_shipping" value="0.00" />
-            </div>
-            <div>
-                <label for="d_total">Total</label>
-                <input type="text" id="d_total" readonly/>
-            </div>
-            <div>
-                <label for="d_profit">Profit</label>
-                <input type="text" id="d_profit" readonly/>
-            </div>
-            <div>
-                <label for="d_note">Note</label>
-                <input type="text" id="d_note" />
-            </div>
-        </form>
-    </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
                 
     var products = ${products.encodeAsRaw()}
     
@@ -290,6 +307,7 @@
 
         
     });
+
 
 
 </script>

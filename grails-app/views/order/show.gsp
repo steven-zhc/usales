@@ -6,13 +6,14 @@
 </head>
 <body>
 <h1>Order ID: ${order.id}</h1>
-<h3>${order.dateCreated.format('MM/dd/yyyy')} - ${order.status}</h3>
+<h3>${order.dateCreated.format('MM/dd/yyyy')} - ${message(code:'order.status.value.'+fieldValue(bean: order, field: "status"))}</h3>
 
 <form action="">
-    <button type="submit">Processing</button>
+    <button type="submit">Checkout</button>
 </form>
 
 <form action="">
+    <div>${order.note}</div>
     <table>
         <thead>
         <tr>

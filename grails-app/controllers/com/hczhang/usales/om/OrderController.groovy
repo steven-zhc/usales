@@ -7,42 +7,42 @@ class OrderController {
 
     def index() {}
 
-    def add() {
-
+    def String getProductsJSON() {
         def list = []
         for (p in Product.list()) {
             list.add([id: p.id, name: p.name, price: p.listPrice])
         }
 
         def json = JsonOutput.toJson([list: list])
+    }
 
-        ["products": json]
+    def add() {
+
+        ["products": getProductsJSON()]
     }
 
     def save(OrderCommand cmd) {
 
         if (cmd.hasErrors()) {
-            flash.message = "Error add Order."
-            redirect action: "add"
-            return
+            render view: "add", model: ["cmd": cmd, "products": getProductsJSON()]
         }
+
         def order = new Order(cmd.properties)
         order.dateCreated = Date.parse("MM/dd/yyyy", cmd.date)
-
-        println order
 
         for (l in cmd.items) {
             def line = new OrderLine(l.properties)
             line.product = Product.get(l.pid)
 
             order.addToLines(line)
-
-            println line
         }
 
-        order.save(failOnError: true)
-        redirect action: "show", id: order.id
-
+        if (order.save()) {
+            flash.message = "Added a new Order."
+            redirect action: "show", id: order.id
+        } else {
+            render view: "add", model: ["model": order, "products": getProductsJSON()]
+        }
 
     }
 
@@ -51,7 +51,7 @@ class OrderController {
         if (o) {
             ["order": o]
         } else {
-            response.senError(404)
+            ["message": "Not Found."]
         }
     }
 
