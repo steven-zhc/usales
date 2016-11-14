@@ -2,22 +2,30 @@ package com.hczhang.usales.prodm
 
 class CategoryController {
 
-    static scaffold = Category
-
     def index() { }
 
     def add() {
         ["categories": Category.list()]
     }
 
-    def doAdd() {
+    def save() {
         def cat = new Category(params)
 
-        if (cat.validate() && cat.save()) {
-            redirect action: "search"
+        if (cat.save()) {
+            flash.message = "Added a new Category."
+            redirect action: "show", id: cat.id
         } else {
-            flash.message = "Error add Category"
-            [category: cat]
+            render view: "add", model: ["category": cat]
+        }
+    }
+
+    def show() {
+        def cat = Category.findById(params.id)
+
+        if (cat) {
+            ["category": cat]
+        } else {
+            ["message": "Not Found."]
         }
     }
 

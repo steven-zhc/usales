@@ -6,24 +6,33 @@
 <body>
 
 <h1>Create Category</h1>
-<g:form action="doAdd" class="form-horizontal">
-    <div class="form-horizontal">
-        <label for="name" class="col-sm-2 control-label">Category Name</label>
-        <g:textField name="name" value="${category?.name}" class="form-control"/>
+
+<g:renderErrors bean="${category}">
+    <ul>
+        <g:eachError var="error" bean="${category}">
+            <li>${error}</li>
+        </g:eachError>
+    </ul>
+</g:renderErrors>
+
+<form action="/category/save" method="post">
+    <div>
+        <label for="name">Category Name</label>
+        <textarea id="name" name="name" value="${category?.name}"></textarea>
     </div>
 
-    <div class="form-group">
+    <div>
         <label for="parent" class="col-sm-2 control-label">Parent Category</label>
         <g:select name="parent" optionKey="id" optionValue="name" from="${categories}"
             noSelection="${['':'Select One...']}"
             value="${category?.parent?.name}" class="form-control"/>
     </div>
 
-    <div class="form-group">
-        <g:submitButton name="submit" value="Create Category" class="btn btn-default"/>
+    <div>
+        <button type="submit" name="submit">Create Category</button>
     </div>
 
-</g:form>
+</form>
 
 
 </body>
