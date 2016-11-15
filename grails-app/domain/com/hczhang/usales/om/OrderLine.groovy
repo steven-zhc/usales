@@ -4,6 +4,8 @@ import com.hczhang.usales.prodm.Product
 
 class OrderLine {
 
+    static final float TAX_RATE = 0.0875
+
     Integer quantity
     Float discountPrice
     Float sellPrice
@@ -23,6 +25,12 @@ class OrderLine {
         quantity size: 1..1000
         tax nullable: false, validator: {val, OrderLine obj -> val <= obj.sellPrice}
         note nullable: true
+    }
+
+    void settleAccount() {
+        tax = sellPrice * TAX_RATE
+        lineTotal = quantity * sellPrice * (1 + TAX_RATE) + shippingFee
+        lineProfit = quantity * (sellPrice - discountPrice) * (1 + TAX_RATE) + shippingFee
     }
 
     @Override

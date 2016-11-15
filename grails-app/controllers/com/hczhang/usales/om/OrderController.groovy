@@ -49,10 +49,14 @@ class OrderController {
     def show() {
         Order o = Order.findById(params.id)
         if (o) {
-            ["order": o]
+            ["order": o, "products": getProductsJSON()]
         } else {
             ["message": "Not Found."]
         }
+    }
+
+    def update() {
+
     }
 
 }

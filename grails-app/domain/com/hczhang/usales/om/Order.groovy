@@ -2,6 +2,8 @@ package com.hczhang.usales.om
 
 class Order {
 
+    static final int ORDER_STATUS_INQUIRE = 1
+
     Integer status = 1
     Float deliverFee = 0.0f
     Float total
