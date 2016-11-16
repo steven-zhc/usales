@@ -15,11 +15,11 @@
         "status"))}</h3>
 
     <form action="/order/status">
-        <input type="hidden" name="">
+        <input type="hidden" name="id">
         <button type="submit">Checkout</button>
     </form>
 
-    <form action="">
+    <form action="/order/update">
         <div><textarea id="order_note" name="order_note">${order.note}</textarea></div>
 
         <g:if test="${order.status == 1}">
@@ -50,7 +50,7 @@
             <g:if test="${order.status == 1}">
                 <g:each var="l" in="${order.lines}" status="i">
                     <tr>
-                        <td>${l.product.name}</td>
+                        <td>${l.product.name}<input type="hidden" name="item[${i}].pid" value="${l.product.id}"/></td>
                         <td><input type="number" name="item[${i}].quantity" value="${l.quantity}" min="1" max="1000" onchange="updateNumber.apply(this);"/></td>
                         <td>${l.product.listPrice}</td>
                         <td><input type="text" name="item[${i}].discountPrice" value="${l.discountPrice}" onchange="updateDiscountPrice.apply(this);"/></td>
@@ -61,8 +61,7 @@
                         <td>${l.lineTotal}</td>
                         <td>${l.lineProfit}</td>
                         <td>
-                            <input type="hidden" name="item[${i}].id" value="${l.id}"/>
-                            <input type="hidden" name="item[${i}].pid" value="${l.product.id}"/>
+                            <input type="hidden" name="item[${i}].lid" value="${l.id}"/>
                             <input type="text" name="item[${i}].note" value="${l.note}"/>
                         </td>
                         <td><a href="#" onclick="deleteLine.apply(this);">Delete</a></td>
@@ -88,7 +87,15 @@
             </g:else>
             </tbody>
         </table>
-        <g:if test="${order.status == 1}">
+        <div>
+            <span>Total Price</span><span id="order_total_price">${order.total}</span>
+            <input type="hidden" id="total" name="total" value="${order.total}"/>
+        </div>
+        <div>
+            <span>Total Price</span><span id="order_profit_price">${order.profit}</span>
+            <input type="hidden" id="profit" name="profit" value="${order.profit}"/>
+        </div>
+        <g:if test="${order.status == 1 || order.status == 2}">
             <button type="submit">Save</button>
         </g:if>
     </form>
@@ -120,6 +127,7 @@ function updateProduct() {
     });
 
     if (product != null) {
+        $(this).next().val(pid);
         var quantityTag = $(this).parent().next();
 
         var listPriceTag = quantityTag.next();
@@ -204,11 +212,32 @@ function settleAccount(tr) {
     var profitTag = totalTag.next();
     var profit = total - calculatePrice(quantity, discount, shipping);
     profitTag.text(profit.toFixed(2));
+
+    updateOrderAccount();
+}
+
+function updateOrderAccount() {
+    var sum = 0.0;
+    $("#line_table tbody tr").each(function(){
+        var v = parseFloat($(this).find("td:nth-last-child(4)").text());
+        sum += v;
+    });
+    $("#order_total_price").text(sum);
+    $("#total").val(sum);
+
+    sum = 0.0
+    $("#line_table tbody tr").each(function(){
+        sum += parseFloat($(this).find("td:nth-last-child(3)").text());
+    });
+    $("#order_profit_price").text(sum);
+    $("#profit").val(sum);
 }
 
 function deleteLine() {
     var tr = $(this).parent().parent();
     tr.remove();
+
+    updateOrderAccount();
 }
 
 $( function() {
@@ -224,6 +253,8 @@ $( function() {
             '<td>' +
             '<select name="item[' + count + '].name" onchange="updateProduct.apply(this);">' +
                 '<option value="">Select one product ...</option>' + optionlist +
+            '</select>' + 
+            '<input type="hidden" name="item[' + count + '].pid" value="0"/>' +
             '</td>' + 
             '<td><input type="number" name="item[' + count + '].quantity" value="1" min="1" max="1000" onchange="updateNumber.apply(this);"/></td>' +
             '<td></td>' +  
@@ -234,7 +265,8 @@ $( function() {
             '<td><input type="text" name="item[' + count + '].shippingFee" class="shipping_tag" value="0.0" onchange="udpateShipping.apply(this);"/></td>' +  
             '<td></td>' +  
             '<td></td>' +  
-            '<td><input type="text" name="item[' + count + '].note" /></td>' +
+            '<td><input type="text" name="item[' + count + '].note" />' +
+            '<input type="hidden" name="item[' + count + '].lid" value="0"/></td>' +
             '<td><a href="#" onclick="deleteLine.apply(this);">Delete</a></td>' +
             '</tr>';
         $("#line_table tbody").prepend(str);
