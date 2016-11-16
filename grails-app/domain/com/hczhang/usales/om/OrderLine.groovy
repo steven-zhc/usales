@@ -27,10 +27,14 @@ class OrderLine {
         note nullable: true
     }
 
+    Integer getRate() {
+        return (100 * (1 - discountPrice / sellPrice)).round()
+    }
+
     void settleAccount() {
-        tax = sellPrice * TAX_RATE
-        lineTotal = quantity * sellPrice * (1 + TAX_RATE) + shippingFee
-        lineProfit = quantity * (sellPrice - discountPrice) * (1 + TAX_RATE) + shippingFee
+        tax = (sellPrice * TAX_RATE).round(2)
+        lineTotal = (quantity * sellPrice * (1 + TAX_RATE) + shippingFee).round(2)
+        lineProfit = (quantity * (sellPrice - discountPrice) * (1 + TAX_RATE) + shippingFee).round(2)
     }
 
     @Override
