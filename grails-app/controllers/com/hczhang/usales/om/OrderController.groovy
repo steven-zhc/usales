@@ -46,6 +46,45 @@ class OrderController {
 
     }
 
+    def update(OrderCommand cmd) {
+        if (cmd.hasErrors()) {
+            flash.message = "Update Order Failed."
+            redirect action: "show", id: cmd.id
+            return
+        }
+
+        Order order = Order.get(cmd.id)
+        order.properties = cmd.properties
+
+        def exists = cmd.items.inject ([:]) {acc, item -> acc << [(item.id) : item] }
+
+        order.lines.inject([]) {acc, item ->
+            if (!exists.containsKey(item.id)) {
+                acc << item
+            }
+        }.each { item ->
+            order.removeFromLines(item)
+        }
+
+        order.lines.each { item ->
+            item.properties = exists[item.id].properties
+        }
+
+        cmd.newItems.each {item ->
+            OrderLine line = new OrderLine(item.properties)
+            line.product = Product.get(item.pid)
+            order.addToLines(line)
+        }
+
+        if (order.save(flush: true)) {
+            redirect action: "show", id: cmd.id
+            return
+        }
+
+        flash.message = "Update Error."
+        redirect action: "show", id: cmd.id
+    }
+
     def show() {
         Order o = Order.findById(params.id)
         if (o) {
@@ -55,14 +94,11 @@ class OrderController {
         }
     }
 
-    def update() {
-
-    }
-
 }
 
 class LineCommand {
 
+    Long id
     String pid
     Integer quantity
     Float discountPrice
@@ -74,13 +110,15 @@ class LineCommand {
     String note
 
     static constraints = {
-        importFrom OrderLine
+        importFrom OrderLine, exclude: ["id"]
+        id nullable: true
     }
 
 }
 
 class OrderCommand {
 
+    Long id
     String date
     Float deliverFee
     String note
@@ -88,9 +126,12 @@ class OrderCommand {
     Float profit
 
     List<LineCommand> items
+    List<LineCommand> newItems
 
     static constraints = {
-        importFrom Order
+        importFrom Order, exclude: ["id"]
+        id nullable: true
+        date nullable: true
     }
 
 }
