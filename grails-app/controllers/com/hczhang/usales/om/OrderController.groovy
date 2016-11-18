@@ -56,20 +56,27 @@ class OrderController {
         Order order = Order.get(cmd.id)
         order.properties = cmd.properties
 
-        def exists = cmd.items.inject ([:]) {acc, item -> acc << [(item.id) : item] }
+        def exists = (cmd.items - null).inject ([:]) {acc, item -> acc << [(item.id) : item] }
 
-        order.lines.inject([]) {acc, item ->
+        // Remove
+        def toDelete = []
+        for (OrderLine item in order.lines) {
             if (!exists.containsKey(item.id)) {
-                acc << item
+                toDelete << item
             }
-        }.each { item ->
-            order.removeFromLines(item)
         }
 
+        for (OrderLine item in toDelete) {
+            order.removeFromLines(item)
+            item.delete()
+        }
+
+        // Update items
         order.lines.each { item ->
             item.properties = exists[item.id].properties
         }
 
+        // Add new items
         cmd.newItems.each {item ->
             OrderLine line = new OrderLine(item.properties)
             line.product = Product.get(item.pid)
