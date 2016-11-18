@@ -22,7 +22,7 @@
     <form action="/order/update">
         <input type="hidden" name="id" value="${order.id}">
         <input type="hidden" name="deliverFee" value="${order.deliverFee}">
-        <div><textarea id="order_note" name="order_note">${order.note}</textarea></div>
+        <div><textarea id="note" name="note">${order.note}</textarea></div>
 
         <g:if test="${order.status == 1}">
             <button type="button" id="add_line_btn">+</button>
