@@ -30,7 +30,7 @@ class OrderController {
         def order = new Order(cmd.properties)
         order.dateCreated = Date.parse("MM/dd/yyyy", cmd.date)
 
-        for (l in cmd.items) {
+        for (l in cmd.newItems) {
             def line = new OrderLine(l.properties)
             line.product = Product.get(l.pid)
 
@@ -41,7 +41,7 @@ class OrderController {
             flash.message = "Added a new Order."
             redirect action: "show", id: order.id
         } else {
-            render view: "add", model: ["model": order, "products": getProductsJSON()]
+            render view: "add", model: ["order": order, "products": getProductsJSON()]
         }
 
     }
