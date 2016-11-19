@@ -138,7 +138,6 @@ function deleteLine() {
 }
 
 function addOrderLine(products) {
-    console.log("add line");
     var count = $("#line_table tbody").find("tr#new_items").length;
     var optionlist = "";
     $.each(products.list, function(i, p) {
