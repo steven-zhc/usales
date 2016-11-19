@@ -101,6 +101,30 @@ class OrderController {
         }
     }
 
+    def list() {
+        ["orders": Order.list()]
+    }
+
+    def search(SearchOrderCommand cmd) {
+        if (cmd.hasErrors()) {
+            render view: "list", model: ["orders": Order.list()]
+            return
+        }
+
+        def list = Product.where {
+            name =~ "%${cmd.prodName}%"
+        }.list().inject([]) { acc, prod ->
+            acc << Order.withCriteria {
+                lines {
+                    eq("product", prod)
+                }
+            }
+        }.flatten().toSet()
+
+        render view: "list", model: ["cmd": cmd, "orders": list]
+
+    }
+
 }
 
 class LineCommand {
@@ -141,4 +165,12 @@ class OrderCommand {
         date nullable: true
     }
 
+}
+
+class SearchOrderCommand {
+    String prodName
+
+    static constraints = {
+
+    }
 }
