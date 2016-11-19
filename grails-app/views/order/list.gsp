@@ -8,9 +8,12 @@
     <div>
         <form action="/order/search">
             <span>Product Name</span>
-            <input type="text" name="prodName" value="${cmd.prodName}"/>
+            <input type="text" name="prodName" value="${cmd?.prodName}"/>
             <button type="submit">Search</button>
         </form>
+    </div>
+    <div>
+        <button type="button" onclick="location.href='/order/add'">Creat Order</button>
     </div>
     <div>
         <table>

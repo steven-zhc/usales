@@ -66,7 +66,7 @@
                             <input type="hidden" name="items[${i}].id" value="${l.id}"/>
                             <input type="text" name="items[${i}].note" value="${l.note}"/>
                         </td>
-                        <td><a href="#" onclick="deleteLine.apply(this);">Delete</a></td>
+                        <td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>
                     </tr>
                 </g:each>
             </g:if>
@@ -275,7 +275,7 @@ $( function() {
             '<td>' +
             '<input type="text"   name="newItems[' + count + '].note" />' +
             '<input type="hidden" name="newItems[' + count + '].id" value="0"/></td>' +
-            '<td><a href="#" onclick="deleteLine.apply(this);">Delete</a></td>' +
+            '<td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>' +
             '</tr>';
         $("#line_table tbody").prepend(str);
     });
