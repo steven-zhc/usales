@@ -5,8 +5,11 @@
 </head>
 <body>
 <div>
-    <h1>Search for Product</h1>
-    <g:form action="search">
+    <h1>Product List</h1>
+
+    <button type="button" onclick="location.href='/product/add'" >New Product</button>
+
+    <g:form action="list">
         <label for="name">Product Name</label>
         <g:textField name="name" value="${cmd?.name}"/>
 

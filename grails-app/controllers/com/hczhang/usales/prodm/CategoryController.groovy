@@ -29,14 +29,15 @@ class CategoryController {
         }
     }
 
-    def search(SearchCategoryCommand cmd) {
-        if (cmd.hasErrors()) {
+    def list(String name) {
+
+        if (!name) {
             ["categories": Category.list()]
         } else {
             def list = Category.where {
-                name =~ "%${cmd.name}%"
+                name =~ "%${name}%"
             }.list()
-            ["command": cmd, "categories": list]
+            ["name": name, "categories": list]
         }
     }
 }

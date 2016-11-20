@@ -33,8 +33,7 @@
         <label for="cid">Category</label>
         <g:select name="cid" optionKey="id" optionValue="name" from="${categories}"
                   noSelection="${['':'Select One...']}"/>
-
-        <a href="/category/add">New Category</a>
+        <button type="button" onclick="location.href='/category/add'" >New Category</button>
     </div>
 
     <div>

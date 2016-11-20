@@ -5,6 +5,7 @@
     <title>Order List</title>
 </head>
 <body>
+    <h1>Order List</h1>
     <div>
         <form action="/order/search">
             <span>Product Name</span>

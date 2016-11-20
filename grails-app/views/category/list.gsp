@@ -5,11 +5,14 @@
     <title>Query Category</title>
 </head>
 <body>
-    <h1>Query Category</h1>
+    <h1>Category List</h1>
+    
+    <button type="button" onclick="location.href='/category/add'" >New Category</button>
+    
     <div class="">
-        <g:form action="search">
+        <g:form action="list">
             <label for="name">Category Name</label>
-            <g:textField name="name" value="${command?.name}" />
+            <g:textField name="name" value="${name}" />
             <g:submitButton name="submit" value="Search" />
         </g:form>
     </div>
