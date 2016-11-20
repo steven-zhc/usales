@@ -2,7 +2,7 @@ package com.hczhang.usales.prodm
 
 class CategoryController {
 
-    def index() { }
+    static defaultAction = "list"
 
     def add() {
         ["categories": Category.list()]

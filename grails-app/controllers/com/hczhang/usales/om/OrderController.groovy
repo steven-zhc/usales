@@ -5,7 +5,7 @@ import groovy.json.JsonOutput
 
 class OrderController {
 
-    def index() {}
+    static defaultAction = "list"
 
     def String getProductsJSON() {
         def list = []

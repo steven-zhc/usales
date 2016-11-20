@@ -2,9 +2,7 @@ package com.hczhang.usales.prodm
 
 class ProductController {
 
-//    static scaffold = Product
-
-    def index() {}
+    static defaultAction = "list"
 
     def list(String name, Integer cid) {
 
