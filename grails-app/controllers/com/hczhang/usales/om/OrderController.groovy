@@ -39,7 +39,7 @@ class OrderController {
 
         if (order.save()) {
             flash.message = "Added a new Order successful."
-            redirect action: "show", id: cmd.id
+            redirect action: "show", id: order.id
             return
         } else {
             render view: "add", model: ["order": order, "products": getProductsJSON()]
@@ -55,7 +55,11 @@ class OrderController {
         }
 
         Order order = Order.get(cmd.id)
-        order.properties = cmd.properties
+
+        order.deliverFee = cmd.deliverFee ?: order.deliverFee
+        order.trackingNo = cmd.trackingNo ?: order.trackingNo
+        order.payment    = cmd.payment    ?: order.payment
+        order.status     = cmd.status     ?: order.status
 
         if (cmd.items || cmd.newItems) {
             def exists = (cmd.items - null).inject([:]) { acc, item -> acc << [(item.id): item] }
@@ -145,17 +149,6 @@ class LineCommand {
     String note
 
     static constraints = {
-//        importFrom OrderLine, exclude: ["id"]
-        id nullable: true
-        pid nullable: true
-        quantity nullable: true
-        discountPrice nullable: true
-        sellPrice nullable: true
-        tax nullable: true
-        shippingFee nullable: true
-        lineTotal nullable: true
-        lineProfit nullable: true
-        note nullable: true
     }
 
 }
@@ -165,23 +158,18 @@ class OrderCommand {
     Long id
     String date
     Float deliverFee
+    String trackingNo
     String note
     Float total
     Float profit
+    Float payment
     Integer status
 
     List<LineCommand> items
     List<LineCommand> newItems
 
     static constraints = {
-//        importFrom Order, exclude: ["id"]
-        id nullable: true
-        date nullable: true
-        deliverFee nullable: true
-        note nullable: true
-        status nullable: true
-        items nullable: true
-        newItems nullable: true
+        // importFrom Order, exclude: ["id"]
     }
 
 }

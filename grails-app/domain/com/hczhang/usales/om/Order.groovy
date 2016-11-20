@@ -5,23 +5,28 @@ class Order {
     static final int ORDER_STATUS_INQUIRE = 1
 
     Integer status = 1
-    Float deliverFee = 0.0f
+
     Float total
     Float profit
     Date dateCreated
     String note
+    Float payment
+
+    Float deliverFee
+    Date shippingDate
+    String trackingNo
 
     static hasMany = [lines : OrderLine]
 
     static constraints = {
-        note nullable: true
+        note size: 1..255
         status defaultValue: 1
+        payment defaultValue: 0.0
     }
 
     static mapping = {
         table '`order`'
 
-        deliverFee defaultValue: 0
         status column: '`status`'
     }
 
@@ -30,11 +35,14 @@ class Order {
         return """\
 Order{
     status=$status,
-    deliverFee=$deliverFee,
     total=$total,
     profit=$profit,
     dateCreated=$dateCreated,
-    note='$note'
+    note='$note',
+    payment=$payment,
+    deliverFee=$deliverFee,
+    shippingDate=$shippingDate,
+    trackingNo='$trackingNo'
 }"""
     }
 }

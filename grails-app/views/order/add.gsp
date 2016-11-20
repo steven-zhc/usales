@@ -26,13 +26,15 @@
 
 <form action="/order/save" method="post">
 
+    <input type="hidden" name="status" value="1"/>
+
+    <div>
+        <button type="submit">Create Order</button>
+    </div>
+
     <div>
         <label for="date">Date</label>
         <input id="date" name="date" value="${new Date().format('MM/dd/yyyy')}"/>
-    </div>
-    <div>
-        <label for="deliverFee">Deliver Fee</label>
-        <input type="text" id="deliverFee" name="deliverFee" value="0.00"/>
     </div>
     <div>
         <label for="note">Note</label>
@@ -87,13 +89,10 @@
         <input type="hidden" id="total" name="total" value="0.0"/>
     </div>
     <div>
-        <span>Total Price</span><span id="order_profit_price">0.0</span>
+        <span>Profit Price</span><span id="order_profit_price">0.0</span>
         <input type="hidden" id="profit" name="profit" value="0.0"/>
     </div>
-
-    <div>
-        <button type="submit">Create Order</button>
-    </div>
+    
 </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

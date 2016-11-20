@@ -91,7 +91,7 @@ function settleAccount(tr) {
     var sellPrice = parseFloat(sellPriceTag.children("input").val());
 
     var taxTag = sellPriceTag.next();
-    var tax = calculateTax(sellPrice);
+    var tax = calculateTax(quantity * sellPrice);
     taxTag.children("span").text(tax.toFixed(2));
     taxTag.children("input").val(tax.toFixed(2));
 

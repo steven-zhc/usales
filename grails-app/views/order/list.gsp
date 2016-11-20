@@ -25,6 +25,7 @@
                     <td>Product</td>
                     <td>Total</td>
                     <td>Profit</td>
+                    <td>Payment</td>
                     <td>Note</td>
                 </tr>
             </thead>
@@ -44,6 +45,7 @@
                     </td>
                     <td>${o.total}</td>
                     <td>${o.profit}</td>
+                    <td>${o.payment}</td>
                     <td>${o.note}</td>
                 </tr>
                 </g:each>

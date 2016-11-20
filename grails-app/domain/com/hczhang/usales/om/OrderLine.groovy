@@ -21,10 +21,18 @@ class OrderLine {
     static belongsTo = [order : Order]
 
     static constraints = {
-        product nullable: false
-        quantity size: 1..1000
+        quantity nullable: false, size: 1..1000
+        discountPrice nullable: false
+        sellPrice nullable: false
         tax nullable: false, validator: {val, OrderLine obj -> val <= obj.sellPrice}
-        note nullable: true
+        lineTotal nullable: false
+        lineProfit nullable: false
+        product nullable: false
+        note size: 1..255
+    }
+
+    static mapping = {
+        shippingFee defaultValue: 0.0
     }
 
     Integer getRate() {

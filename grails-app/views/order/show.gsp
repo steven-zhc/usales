@@ -18,31 +18,48 @@
     <form action="/order/update">
         <input type="hidden" name="id" value="${order.id}">
 
-        <g:if test="${order.status == 2}" >
-            <div>
-                <span>Shipping</span>
-                <input type="text" id="deliverFee" name="deliverFee" value="${order.deliverFee}"/>
-            </div>
-        </g:if>
-        <g:else>
-            <input type="hidden" name="deliverFee" value="${order.deliverFee}"/>
-        </g:else>
-
         <g:if test="${order.status == 1}">
             <button type="submit" name="status" value="0">Cancel</button>
         </g:if>
 
         <g:if test="${order.status == 1}">
             <button type="submit" name="status" value="2">Checkout</button>
+            <div><textarea id="note" name="note">${order.note}</textarea></div>
         </g:if>
         <g:elseif test="${order.status == 2}" >
+            
             <button type="submit" name="status" value="3">Shipping</button>
+
+            <div>
+                <span>Shipping Fee</span>
+                <input type="text" id="deliverFee" name="deliverFee" value="${order.deliverFee}"/>
+            </div>
+            
+            <div>
+                <span>Tracking #</span>
+                <input type="text" id="trackingNo" name="trackingNo" value="${order.trackingNo}"/>
+            </div>
+            
+            <div><textarea id="note" name="note">${order.note}</textarea></div>
         </g:elseif>
         <g:elseif test="${order.status == 3}" >
+            <input type="text" name="payment" value="0.0" />
             <button type="submit" name="status" value="4">Pay off</button>
-        </g:elseif>
+            <div>
+                <span>Shipping Fee</span>
+                <span>${order.deliverFee}</span>
+            </div>
+            <div>
+                <span>Tracking #</span>
+                <span>${order.trackingNo}</span>
+            </div>
 
-        <div><textarea id="note" name="note">${order.note}</textarea></div>
+            <div><textarea id="note" name="note">${order.note}</textarea></div>
+        </g:elseif>
+        <g:elseif test="${order.status == 4}">
+            <div>${order.note}</div>
+        </g:elseif>
+        
 
         <g:if test="${order.status == 1}">
             <button type="button" id="add_line_btn">+</button>
@@ -117,8 +134,13 @@
             <span>Profit Price</span><span id="order_profit_price">${order.profit}</span>
             <input type="hidden" id="profit" name="profit" value="${order.profit}"/>
         </div>
-        <g:if test="${order.status == 1 || order.status == 2}">
+        <g:if test="${order.status == 1}">
             <button type="submit">Save</button>
+        </g:if>
+        <g:if test="${order.status == 4}">
+            <div>
+                <span>Payment</span><span>${order.payment}</span>
+            </div>
         </g:if>
     </form>
 </g:if>
