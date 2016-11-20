@@ -68,19 +68,19 @@
         <table id="line_table">
             <thead>
             <tr>
-                <td>Product</td>
-                <td>Quantity</td>
-                <td>List Price</td>
-                <td>Discount Price</td>
-                <td>Rate</td>
-                <td>Sell Price</td>
-                <td>Tax</td>
-                <td>Shipping</td>
-                <td>Total</td>
-                <td>Profit</td>
-                <td>Note</td>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>List Price</th>
+                <th>Discount Price</th>
+                <th>Rate</th>
+                <th>Sell Price</th>
+                <th>Tax</th>
+                <th>Shipping</th>
+                <th>Total</th>
+                <th>Profit</th>
+                <th>Note</th>
                 <g:if test="${order.status == 1}">
-                    <td>Action</td>
+                    <th>Action</th>
                 </g:if>
             </tr>
             </thead>

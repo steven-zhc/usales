@@ -37,12 +37,12 @@
         <table>
             <thead>
                 <tr>
-                    <td>ID</td>
-                    <td>Date</td>
-                    <td>Product</td>
-                    <td>Total</td>
-                    <td>Profit</td>
-                    <td>Note</td>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Product</th>
+                    <th>Total</th>
+                    <th>Profit</th>
+                    <th>Note</th>
                 </tr>
             </thead>
             <tbody>
