@@ -41,11 +41,3 @@ class CategoryController {
         }
     }
 }
-
-class SearchCategoryCommand {
-    String name
-
-    static constraints = {
-        importFrom Category
-    }
-}
