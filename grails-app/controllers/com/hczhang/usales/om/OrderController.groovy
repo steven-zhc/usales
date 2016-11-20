@@ -38,8 +38,9 @@ class OrderController {
         }
 
         if (order.save()) {
-            flash.message = "Added a new Order."
-            redirect action: "show", id: order.id
+            flash.message = "Added a new Order successful."
+            redirect action: "show", id: cmd.id
+            return
         } else {
             render view: "add", model: ["order": order, "products": getProductsJSON()]
         }
@@ -56,31 +57,33 @@ class OrderController {
         Order order = Order.get(cmd.id)
         order.properties = cmd.properties
 
-        def exists = (cmd.items - null).inject ([:]) {acc, item -> acc << [(item.id) : item] }
+        if (cmd.items || cmd.newItems) {
+            def exists = (cmd.items - null).inject([:]) { acc, item -> acc << [(item.id): item] }
 
-        // Remove
-        def toDelete = []
-        for (OrderLine item in order.lines) {
-            if (!exists.containsKey(item.id)) {
-                toDelete << item
+            // Remove
+            def toDelete = []
+            for (OrderLine item in order.lines) {
+                if (!exists.containsKey(item.id)) {
+                    toDelete << item
+                }
             }
-        }
 
-        for (OrderLine item in toDelete) {
-            order.removeFromLines(item)
-            item.delete()
-        }
+            for (OrderLine item in toDelete) {
+                order.removeFromLines(item)
+                item.delete()
+            }
 
-        // Update items
-        order.lines.each { item ->
-            item.properties = exists[item.id].properties
-        }
+            // Update items
+            order.lines.each { item ->
+                item.properties = exists[item.id].properties
+            }
 
-        // Add new items
-        cmd.newItems.each {item ->
-            OrderLine line = new OrderLine(item.properties)
-            line.product = Product.get(item.pid)
-            order.addToLines(line)
+            // Add new items
+            cmd.newItems.each { item ->
+                OrderLine line = new OrderLine(item.properties)
+                line.product = Product.get(item.pid)
+                order.addToLines(line)
+            }
         }
 
         if (order.save(flush: true)) {
@@ -97,7 +100,8 @@ class OrderController {
         if (o) {
             ["order": o, "products": getProductsJSON()]
         } else {
-            ["message": "Not Found."]
+            flash.message = "Cannot find order."
+            redirect action: "list"
         }
     }
 
@@ -141,8 +145,17 @@ class LineCommand {
     String note
 
     static constraints = {
-        importFrom OrderLine, exclude: ["id"]
+//        importFrom OrderLine, exclude: ["id"]
         id nullable: true
+        pid nullable: true
+        quantity nullable: true
+        discountPrice nullable: true
+        sellPrice nullable: true
+        tax nullable: true
+        shippingFee nullable: true
+        lineTotal nullable: true
+        lineProfit nullable: true
+        note nullable: true
     }
 
 }
@@ -155,14 +168,20 @@ class OrderCommand {
     String note
     Float total
     Float profit
+    Integer status
 
     List<LineCommand> items
     List<LineCommand> newItems
 
     static constraints = {
-        importFrom Order, exclude: ["id"]
+//        importFrom Order, exclude: ["id"]
         id nullable: true
         date nullable: true
+        deliverFee nullable: true
+        note nullable: true
+        status nullable: true
+        items nullable: true
+        newItems nullable: true
     }
 
 }

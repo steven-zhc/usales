@@ -5,22 +5,43 @@
     <title>Show Order</title>
 </head>
 <body>
-<g:if test="${message}">
-    <div class="message" role="status">${message}</div>
-</g:if>
 
 <g:if test="${order}">
     <h1>Order ID: ${order.id}</h1>
     <h3>${order.dateCreated.format('MM/dd/yyyy')} - ${message(code:'order.status.value.'+fieldValue(bean: order, field:
         "status"))}</h3>
 
-    <form action="/order/status">
-        <button type="submit">Checkout</button>
-    </form>
+    <g:if test="${flash.message}">
+        <div class="message" role="status">${flash.message}</div>
+    </g:if>
 
     <form action="/order/update">
         <input type="hidden" name="id" value="${order.id}">
-        <input type="hidden" name="deliverFee" value="${order.deliverFee}">
+
+        <g:if test="${order.status == 2}" >
+            <div>
+                <span>Shipping</span>
+                <input type="text" id="deliverFee" name="deliverFee" value="${order.deliverFee}"/>
+            </div>
+        </g:if>
+        <g:else>
+            <input type="hidden" name="deliverFee" value="${order.deliverFee}"/>
+        </g:else>
+
+        <g:if test="${order.status == 1}">
+            <button type="submit" name="status" value="0">Cancel</button>
+        </g:if>
+
+        <g:if test="${order.status == 1}">
+            <button type="submit" name="status" value="2">Checkout</button>
+        </g:if>
+        <g:elseif test="${order.status == 2}" >
+            <button type="submit" name="status" value="3">Shipping</button>
+        </g:elseif>
+        <g:elseif test="${order.status == 3}" >
+            <button type="submit" name="status" value="4">Pay off</button>
+        </g:elseif>
+
         <div><textarea id="note" name="note">${order.note}</textarea></div>
 
         <g:if test="${order.status == 1}">
@@ -93,7 +114,7 @@
             <input type="hidden" id="total" name="total" value="${order.total}"/>
         </div>
         <div>
-            <span>Total Price</span><span id="order_profit_price">${order.profit}</span>
+            <span>Profit Price</span><span id="order_profit_price">${order.profit}</span>
             <input type="hidden" id="profit" name="profit" value="${order.profit}"/>
         </div>
         <g:if test="${order.status == 1 || order.status == 2}">
@@ -113,6 +134,11 @@ $( function() {
     $("#add_line_btn").click(function (e) {
         e.preventDefault();
         addOrderLine(products);
+    });
+
+    $("#deliverFee").change(function (e) {
+        e.preventDefault();
+        updateDeliverFee();
     });
 });
 

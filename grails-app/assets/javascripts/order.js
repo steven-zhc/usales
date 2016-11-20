@@ -130,6 +130,15 @@ function updateOrderAccount() {
     $("#profit").val(sum);
 }
 
+function updateDeliverFee() {
+    var fee = parseFloat($("#deliverFee").val());
+    var total = parseFloat($("#total").val());
+    var sum = (total + fee).toFixed(2);
+
+    $("#order_total_price").text(sum);
+    $("#total").val(sum);
+}
+
 function deleteLine() {
     var tr = $(this).parent().parent();
     tr.remove();
