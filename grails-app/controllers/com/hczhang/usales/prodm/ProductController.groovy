@@ -9,10 +9,10 @@ class ProductController {
         if (name || cid) {
             def list = Product.where {
                 if (name) {
-                    name =~ "%${cmd.name}%"
+                    name =~ "%${name}%"
                 }
                 if (cid) {
-                    category.id == cmd.cid
+                    category.id == cid
                 }
             }.list()
             ["cmd": cmd, "categories": Category.list(), "products": list]
