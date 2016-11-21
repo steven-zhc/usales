@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:g="http://www.w3.org/1999/xhtml">
 <head>
+    <meta name="layout" content="main" />
     <title>Create Product</title>
 </head>
 <body>

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="layout" content="main" />
     <title>Create Category</title>
 </head>
 <body>

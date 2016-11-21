@@ -1,17 +1,10 @@
 <!doctype html>
 <html>
 <head>
+    <meta name="layout" content="main" />
     <title>Welcome to USales</title>
 </head>
 <body>
-    <content>
-        <a href=""></a>
-        <li><a href="/">Home</a></li>
-        <li><a href="/category">Category</a></li>
-        <li><a href="/product">Product</a></li>
-        <li><a href="/order">Order</a></li>
-    </content>
-
     <h1>Welcome to USales</h1>
 
     <div id="content" role="main">
@@ -40,6 +33,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Status</th>
                     <th>Date</th>
                     <th>Product</th>
                     <th>Total</th>
@@ -51,6 +45,7 @@
                 <g:each var="o" in="${list}">
                     <tr>
                         <td><a href="/order/show/${o.id}">${o.id}</a></td>
+                        <td>${message(code:'order.status.value.'+fieldValue(bean: o, field:"status"))}</td>
                         <td>${o.dateCreated.format('MM/dd/yyyy')}</td>
                         <td>
                             <g:each var="line" in="${o.lines}" status="j">

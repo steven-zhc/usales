@@ -15,9 +15,9 @@ class ProductController {
                     category.id == cid
                 }
             }.list()
-            ["cmd": cmd, "categories": Category.list(), "products": list]
+            ["name": name, "cid": cid, "categories": Category.list(), "products": list]
         } else {
-            ["name": name, "cid": cid, "categories": Category.list()]
+            ["products": Product.list(), "categories": Category.list()]
         }
 
     }
