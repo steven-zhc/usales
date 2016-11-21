@@ -17,23 +17,25 @@
     <div id="content" role="main">
         <table>
             <tr>
-                <td>4</td>
-                <td>35,000</td>
-                <td>5,000</td>
-                <td>40,000</td>
+                <th>Order</th>
+                <th>Total</th>
+                <th>Profit</th>
+                <th>Payment</th>
             </tr>
             <tr>
-                <td>Order</td>
-                <td>Total</td>
-                <td>Profit</td>
-                <td>Payment</td>
+                <td>${statistics.count}</td>
+                <td>${statistics.total}</td>
+                <td>${statistics.profit}</td>
+                <td>${statistics.payment}</td>
             </tr>
         </table>
         
         <h2>Todo List</h2>
-        <button type="button">Inquiring</button>
-        <button type="button">Processing</button>
-        <button type="button">Shipping</button>
+        <form action="/">
+            <button type="submit" name="status" value="1">Inquiring</button>
+            <button type="submit" name="status" value="2">Processing</button>
+            <button type="submit" name="status" value="3">Shipping</button>
+        </form>
         <table>
             <thead>
                 <tr>
@@ -46,14 +48,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <g:each var="o" in="${list}">
+                    <tr>
+                        <td><a href="/order/show/${o.id}">${o.id}</a></td>
+                        <td>${o.dateCreated.format('MM/dd/yyyy')}</td>
+                        <td>
+                            <g:each var="line" in="${o.lines}" status="j">
+                                ${line.product.name}
+                                <g:if test="${j != o.lines.size() - 1}">
+                                    <br/>
+                                </g:if>
+                            </g:each>
+                        </td>
+                        <td>${o.total}</td>
+                        <td>${o.profit}</td>
+                        <td>${o.note}</td>
+                    </tr>
+                </g:each>
+                
             </tbody>
         </table>
     </div>
