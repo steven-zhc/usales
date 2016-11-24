@@ -38,14 +38,14 @@ class Statistics {
     Float payment
 
     void setTotal(Float total) {
-        this.total = total.round(2)
+        this.total = total?.round(2)
     }
 
     void setProfit(Float profit) {
-        this.profit = profit.round(2)
+        this.profit = profit?.round(2)
     }
 
     void setPayment(Float payment) {
-        this.payment = payment.round(2)
+        this.payment = payment?.round(2)
     }
 }
