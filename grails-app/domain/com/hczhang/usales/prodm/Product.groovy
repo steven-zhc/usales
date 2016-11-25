@@ -12,7 +12,7 @@ class Product {
     static constraints = {
         name nullable: false, size: 2..150
         picPath nullable: true
-        description nullable: true
+        description nullable: true, size: 2..255
     }
 
     String getDisplayString() {
@@ -31,3 +31,4 @@ Product{
 }"""
     }
 }
+
