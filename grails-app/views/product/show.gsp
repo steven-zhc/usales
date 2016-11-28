@@ -25,11 +25,6 @@
             </div>
 
             <div>
-                <span>Product Model</span>
-                <div>${product.model}</div>
-            </div>
-
-            <div>
                 <span>List Price</span>
                 <div>${product.listPrice}</div>
             </div>

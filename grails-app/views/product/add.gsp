@@ -38,11 +38,6 @@
     </div>
 
     <div>
-        <label for="model">Model</label>
-        <input type="text" id="model" name="model"/>
-    </div>
-
-    <div>
         <label for="listPrice">List Price</label>
         <input type="text" id="listPrice" name="listPrice"/>
     </div>

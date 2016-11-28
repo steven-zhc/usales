@@ -6,7 +6,6 @@ class Product {
     String description
     String picPath
     Float listPrice = 0
-    String model
     String url
 
     Category category
@@ -14,7 +13,6 @@ class Product {
     static constraints = {
         name nullable: false, size: 2..150
         description size: 2..255
-        model size: 2..50
         url size: 1..255
     }
 
@@ -30,7 +28,6 @@ Product{
     description='$description', 
     picPath='$picPath', 
     listPrice=$listPrice, 
-    model='$model', 
     url='$url', 
     category=$category
 }"""
