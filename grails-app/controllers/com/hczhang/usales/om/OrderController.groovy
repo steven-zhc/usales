@@ -135,18 +135,29 @@ class OrderController {
 
 }
 
+class DetailsCommand {
+    Float price
+    Float tax
+    Float shipping
+    Float discount
+    Float total
+}
+
 class LineCommand {
 
     Long id
     String pid
+    String model
     Integer quantity
     Float discountPrice
-    Float sellPrice
-    Float tax
+
     Float shippingFee
     Float lineTotal
     Float lineProfit
     String note
+
+    DetailsCommand purchase
+    DetailsCommand sell
 
     static constraints = {
     }

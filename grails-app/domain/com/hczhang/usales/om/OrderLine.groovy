@@ -6,25 +6,28 @@ class OrderLine {
 
     static final float TAX_RATE = 0.0875
 
+    Product product
+
+    String model
+
+    Date dateCreated
+
     Integer quantity
-    Float discountPrice
-    Float sellPrice
-    Float tax
     Float shippingFee
     Float lineTotal
     Float lineProfit
-    Date dateCreated
     String note
 
-    Product product
+    LineDetails purchase
+    LineDetails sell
+
+    static embedded = ['purchase', 'sell']
 
     static belongsTo = [order : Order]
 
     static constraints = {
+        model size: 2..50
         quantity nullable: false, size: 1..1000
-        discountPrice nullable: false
-        sellPrice nullable: false
-        tax nullable: false, validator: {val, OrderLine obj -> val <= obj.sellPrice}
         lineTotal nullable: false
         lineProfit nullable: false
         product nullable: false
@@ -35,30 +38,52 @@ class OrderLine {
         shippingFee defaultValue: 0.0
     }
 
-    Integer getRate() {
-        return (100 * (1 - discountPrice / sellPrice)).round()
-    }
-
     void settleAccount() {
-        tax = (sellPrice * TAX_RATE).round(2)
-        lineTotal = (quantity * sellPrice * (1 + TAX_RATE) + shippingFee).round(2)
-        lineProfit = (quantity * (sellPrice - discountPrice) * (1 + TAX_RATE) + shippingFee).round(2)
+
+        sell.settle()
+        purchase.settle()
+
+        lineTotal = sell.total
+        lineProfit = sell.total - purchase.total
+
     }
 
     @Override
     public String toString() {
         return """\
 OrderLine{
-    quantity=$quantity,
-    discountPrice=$discountPrice,
-    sellPrice=$sellPrice,
-    tax=$tax,
-    shippingFee=$shippingFee,
-    lineTotal=$lineTotal,
-    lineProfit=$lineProfit,
-    dateCreated=$dateCreated,
-    note='$note',
-    product=$product
+    product=$product, 
+    dateCreated=$dateCreated, 
+    quantity=$quantity, 
+    lineTotal=$lineTotal, 
+    lineProfit=$lineProfit, 
+    note='$note', 
+    purchase=$purchase, 
+    sell=$sell
+}"""
+    }
+}
+
+class LineDetails {
+    Float price
+    Float tax
+    Float shipping
+    Float discount
+    Float total
+
+    void settle() {
+        total = price + tax + shipping + discount
+    }
+
+    @Override
+    public String toString() {
+        return """\
+LineDetails{
+    price=$price, 
+    tax=$tax, 
+    shipping=$shipping, 
+    discount=$discount, 
+    total=$total
 }"""
     }
 }

@@ -46,6 +46,70 @@
         <button id="add_line_btn" type="button">+</button>
     </div>
 
+    <div>
+        <div class="order_line">
+            <table>
+                <tr>
+                    <td>Product</td>
+                    <td>Quantity</td>
+                    <td>List Price</td>
+                    <td>Total</td>
+                    <td>Profit</td>
+                    <td>Note</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="newItems[' + count + '].name" onchange="updateProduct.apply(this);">
+                            <option value="">Select one product ...</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="newItems[0].quantity" value="1" min="1" max="1000" onchange="updateNumber.apply(this);"/></td>
+                    <td>33.00</td>
+                    <td>100.00</td>
+                    <td>30.00</td>
+                    <td><input type="text" name="newItems[0].note" /></td>
+                    <td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Price</td>
+                    <td>Tax</td>
+                    <td>Shipping</td>
+                    <td>Discount</td>
+                    <td>Total</td>
+                </tr>
+                <tr>
+                    <td>Purchase</td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td>70</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="text" size="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Sell</td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td>100</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
     <table id="line_table">
         <thead>
         <tr>
