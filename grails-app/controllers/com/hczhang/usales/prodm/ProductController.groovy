@@ -66,6 +66,8 @@ class SaveProductCommand {
     //String picPath
     Float listPrice
     Integer cid
+    String model
+    String url
 
     static constraints = {
         importFrom Product

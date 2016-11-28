@@ -30,14 +30,22 @@
         <tr>
             <th>Name</th>
             <th>Category</th>
+            <th>Model</th>
             <th>List Price</th>
+            <th>Link</th>
             <th>Description</th>
         </tr>
         <g:each var="p" in="${products}">
             <tr>
                 <td>${p.name}</td>
                 <td>${p.category.name}</td>
+                <td>${p.model}</td>
                 <td>${p.listPrice}</td>
+                <td>
+                    <g:if test="${p.url}">
+                        <a href="${p.url}">Go to Website</a>
+                    </g:if>
+                </td>
                 <td>${p.description}</td>
             </tr>
         </g:each>

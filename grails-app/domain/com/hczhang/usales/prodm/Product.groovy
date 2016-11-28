@@ -6,13 +6,16 @@ class Product {
     String description
     String picPath
     Float listPrice = 0
+    String model
+    String url
 
     Category category
 
     static constraints = {
         name nullable: false, size: 2..150
-        picPath nullable: true
-        description nullable: true, size: 2..255
+        description size: 2..255
+        model size: 2..50
+        url size: 1..255
     }
 
     String getDisplayString() {
@@ -23,10 +26,12 @@ class Product {
     public String toString() {
         return """\
 Product{
-    name='$name',
-    description='$description',
-    picPath='$picPath',
-    listPrice=$listPrice,
+    name='$name', 
+    description='$description', 
+    picPath='$picPath', 
+    listPrice=$listPrice, 
+    model='$model', 
+    url='$url', 
     category=$category
 }"""
     }

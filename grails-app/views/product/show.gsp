@@ -25,8 +25,18 @@
             </div>
 
             <div>
+                <span>Product Model</span>
+                <div>${product.model}</div>
+            </div>
+
+            <div>
                 <span>List Price</span>
                 <div>${product.listPrice}</div>
+            </div>
+
+            <div>
+                <span>Product URL</span>
+                <div><a href="${product.url}">${product.url}</a></div>
             </div>
 
             <div>
