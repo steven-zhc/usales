@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="layout" content="main" />
     <title>Create Order</title>
+
+    <asset:stylesheet src="order.css"/>
 </head>
 
 <body>
@@ -39,125 +41,27 @@
     </div>
     <div>
         <label for="note">Note</label>
-        <textarea name="note" id="note"></textarea>
+        <input type="text" name="note" />
+    </div>
+
+    <div>
+        <label for="note">Order Total</label>
+        <span id="order_total">0.0</span>
+        <input type="hidden" id="total" name="total" value="0.0"/>
+    </div>
+    <div>
+        <label for="note">Order Profit</label>
+        <span id="order_profit">0.0</span>
+        <input type="hidden" id="profit" name="profit" value="0.0"/>
     </div>
 
     <div>
         <button id="add_line_btn" type="button">+</button>
     </div>
 
-    <div>
-        <div class="order_line">
-            <table>
-                <tr>
-                    <td>Product</td>
-                    <td>Quantity</td>
-                    <td>List Price</td>
-                    <td>Total</td>
-                    <td>Profit</td>
-                    <td>Note</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <select name="newItems[' + count + '].name" onchange="updateProduct.apply(this);">
-                            <option value="">Select one product ...</option>
-                        </select>
-                    </td>
-                    <td><input type="number" name="newItems[0].quantity" value="1" min="1" max="1000" onchange="updateNumber.apply(this);"/></td>
-                    <td>33.00</td>
-                    <td>100.00</td>
-                    <td>30.00</td>
-                    <td><input type="text" name="newItems[0].note" /></td>
-                    <td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td></td>
-                    <td>Price</td>
-                    <td>Tax</td>
-                    <td>Shipping</td>
-                    <td>Discount</td>
-                    <td>Total</td>
-                </tr>
-                <tr>
-                    <td>Purchase</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td>70</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="text" size="2"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Sell</td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td>100</td>
-                </tr>
-            </table>
-        </div>
+    <div id="items">
+        
     </div>
-
-
-    <table id="line_table">
-        <thead>
-        <tr>
-            <td>Product</td>
-            <td>Quantity</td>
-            <td>List Price</td>
-            <td>Discount Price</td>
-            <td>Rate</td>
-            <td>Sell Price</td>
-            <td>Tax</td>
-            <td>Shipping</td>
-            <td>Total</td>
-            <td>Profit</td>
-            <td>Note</td>
-            <td>Action</td>
-        </tr>
-        </thead>
-        <tbody>
-            <g:each var="l" in="${order?.lines}" status="i">
-                <tr>
-                    <td>${l.product.name}<input type="hidden" name="newItems[${i}].pid" value="${l.product.id}"/></td>
-                    <td><input type="number" name="newItems[${i}].quantity" value="${l.quantity}" min="1" max="1000" onchange="updateNumber.apply(this);"/></td>
-                    <td><span>${l.product.listPrice}</span></td>
-                    <td><input type="text" name="newItems[${i}].discountPrice" value="${l.discountPrice}" onchange="updateDiscountPrice.apply(this);"/></td>
-                    <td><input type="text" value="${l.rate}" onchange="updateRate.apply(this);" size="2"/>%</td>
-                    <td><input type="text" name="newItems[${i}].sellPrice" value="${l.sellPrice}" onchange="updateSellPrice.apply(this);"/></td>
-                    <td><span>${l.tax}</span><input type="hidden" name="newItems[${i}].tax" value="${l.tax}"/></td>
-                    <td><input type="text" name="newItems[${i}].shippingFee" value="${l.shippingFee}" onchange="udpateShipping.apply(this);"></td>
-                    <td><span>${l.lineTotal}</span><input type="hidden" name="newItems[${i}].lineTotal" value="${l.lineTotal}"/></td>
-                    <td><span>${l.lineProfit}</span><input type="hidden" name="newItems[${i}].lineProfit" value="${l.lineProfit}"/></td>
-                    <td>
-                        <input type="hidden" name="newItems[${i}].id" value="${l.id}"/>
-                        <input type="text" name="newItems[${i}].note" value="${l.note}"/>
-                    </td>
-                    <td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>
-                </tr>
-            </g:each>
-        </tbody>
-    </table>
-    <div>
-        <span>Total Price</span><span id="order_total_price">0.0</span>
-        <input type="hidden" id="total" name="total" value="0.0"/>
-    </div>
-    <div>
-        <span>Profit Price</span><span id="order_profit_price">0.0</span>
-        <input type="hidden" id="profit" name="profit" value="0.0"/>
-    </div>
-    
 </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
