@@ -18,7 +18,7 @@ function updateBodySection(tr) {
     var tax        = parseFloat(tr.find("td:nth-child(4) input").val());
     var discount   = parseFloat(tr.find("td:nth-child(5) input").val());
     var shipping   = parseFloat(tr.find("td:nth-child(6) input").val());
-    
+
     var total = calculatePrice(quantity, unitePrice, tax, shipping, discount);
 
     tr.children("td:last-child").text(total.toFixed(2));
@@ -179,7 +179,7 @@ function addOrderLine(prods) {
         '<td>1</td>' + 
         '<td><input type="text" name="newItems[' + count + '].purchase.tax" value="0.0" onchange="numValueChanged.apply(this);"/></td>' + 
         '<td><input type="text" name="newItems[' + count + '].purchase.discount" value="-0.0" onchange="numValueChanged.apply(this);"/></td>' + 
-        '<td><input type="text" name="newItems[' + count + '[.purchase.shipping" value="0.0" onchange="numValueChanged.apply(this);"/></td>' + 
+        '<td><input type="text" name="newItems[' + count + '].purchase.shipping" value="0.0" onchange="numValueChanged.apply(this);"/></td>' + 
         '<td class="total_purchase">0.0</td>' + 
         '</tr><tr><td></td><td><input type="text" size="2"></td><td></td><td></td><td></td><td></td><td></td></tr>' + 
         '<tr class="item_sell">' + 
