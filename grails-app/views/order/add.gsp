@@ -45,14 +45,12 @@
     </div>
 
     <div>
-        <label for="note">Order Total</label>
+        <label for="order_total">Order Total</label>
         <span id="order_total">0.0</span>
-        <input type="hidden" id="total" name="total" value="0.0"/>
     </div>
     <div>
-        <label for="note">Order Profit</label>
+        <label for="order_profit">Order Profit</label>
         <span id="order_profit">0.0</span>
-        <input type="hidden" id="profit" name="profit" value="0.0"/>
     </div>
 
     <div>
