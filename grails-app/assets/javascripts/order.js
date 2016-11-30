@@ -18,7 +18,7 @@ function updateBodySection(tr) {
     var tax        = parseFloat(tr.find("td:nth-child(4) input").val());
     var discount   = parseFloat(tr.find("td:nth-child(5) input").val());
     var shipping   = parseFloat(tr.find("td:nth-child(6) input").val());
-
+    
     var total = calculatePrice(quantity, unitePrice, tax, shipping, discount);
 
     tr.children("td:last-child").text(total.toFixed(2));
@@ -35,11 +35,11 @@ function unitPriceChanged() {
     var tax = calculateTax(price * quantity).toFixed(2);
     quantityTag.next().children("input").val(tax);
     
-    updateBodySection($(this).parentsUntil("table"));
+    updateBodySection($(this).parentsUntil("tbody"));
 }
 
 function numValueChanged() {
-    updateBodySection($(this).parentsUntil("table"));
+    updateBodySection($(this).parentsUntil("tbody"));
 }
 
 // Order Line Header functions
@@ -56,8 +56,9 @@ function quantityChanged() {
     purchaseTr.find("td:nth-child(3)").text(q);
     sellTr.find("td:nth-child(3)").text(q);
 
-    updateBodySection(purchaseTr);
-    updateBodySection(sellTr);
+    // quantity changed, need to recalculate tax.
+    unitPriceChanged.apply(purchaseTr.find("td:nth-child(2) input"));
+    unitPriceChanged.apply(sellTr.find("td:nth-child(2) input"));
 }
 
 // Update item header
