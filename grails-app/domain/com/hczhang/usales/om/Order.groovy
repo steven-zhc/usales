@@ -10,11 +10,12 @@ class Order {
     Float profit
     Date dateCreated
     String note
-    Float payment
 
     Float deliverFee
-    Date shippingDate
+    Date deliverDate
     String trackingNo
+
+    Float payment
 
     static hasMany = [lines : OrderLine]
 
@@ -30,6 +31,12 @@ class Order {
         status column: '`status`'
     }
 
+    void settle() {
+        this.lines.each { i -> i.settle() }
+        this.total = this.lines.inject(0.0) { acc, line -> acc + line.lineTotal }
+        this.profit = this.lines.inject(0.0) { acc, line -> acc + line.lineProfit }
+    }
+
     @Override
     public String toString() {
         return """\
@@ -41,7 +48,7 @@ Order{
     note='$note',
     payment=$payment,
     deliverFee=$deliverFee,
-    shippingDate=$shippingDate,
+    deliverDate=$deliverDate,
     trackingNo='$trackingNo'
 }"""
     }

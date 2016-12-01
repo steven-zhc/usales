@@ -8,21 +8,19 @@ class OrderLine {
 
     Product product
 
-    String model
-
     Date dateCreated
 
     Integer quantity
-    Float shippingFee
     Float lineTotal
     Float lineProfit
+
+    String model
     String note
 
-    LineDetails purchase
-    LineDetails sell
+    LineBody purchase
+    LineBody sell
 
     static embedded = ['purchase', 'sell']
-
     static belongsTo = [order : Order]
 
     static constraints = {
@@ -35,16 +33,15 @@ class OrderLine {
     }
 
     static mapping = {
-        shippingFee defaultValue: 0.0
     }
 
-    void settleAccount() {
+    void settle() {
 
-        sell.settle()
-        purchase.settle()
+        sell.settle(quantity)
+        purchase.settle(quantity)
 
         lineTotal = sell.total
-        lineProfit = sell.total - purchase.total
+        lineProfit = (sell.total - purchase.total).round(2)
 
     }
 
@@ -64,21 +61,21 @@ OrderLine{
     }
 }
 
-class LineDetails {
+class LineBody {
     Float price
     Float tax
     Float shipping
     Float discount
     Float total
 
-    void settle() {
-        total = price + tax + shipping + discount
+    void settle(int quantity) {
+        total = (price * quantity).round(2) + tax + shipping + discount
     }
 
     @Override
     public String toString() {
         return """\
-LineDetails{
+LineBody{
     price=$price, 
     tax=$tax, 
     shipping=$shipping, 

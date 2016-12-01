@@ -17,7 +17,6 @@ class OrderController {
     }
 
     def add() {
-
         ["products": getProductsJSON()]
     }
 
@@ -31,28 +30,30 @@ class OrderController {
         order.dateCreated = Date.parse("MM/dd/yyyy", cmd.date)
 
         for (l in cmd.newItems) {
-            def line = new OrderLine(l.properties)
-            line.product = Product.get(l.pid)
+            def line = new OrderLine(
+                    product: Product.get(l.pid),
+                    quantity: l.quantity,
+                    model: l.model,
+                    note: l.note,
+                    purchase: new LineBody(l.purchase.properties),
+                    sell: new LineBody(l.sell.properties)
+            )
 
             order.addToLines(line)
         }
 
-        if (order.save()) {
+        order.settle()
+
+        if (order.save(flush: true)) {
             flash.message = "Added a new Order successful."
             redirect action: "show", id: order.id
             return
-        } else {
-            render view: "add", model: ["order": order, "products": getProductsJSON()]
         }
 
+        render view: "add", model: ["order": order, "products": getProductsJSON()]
     }
 
     def update(OrderCommand cmd) {
-        if (cmd.hasErrors()) {
-            flash.message = "Update Order Failed."
-            redirect action: "show", id: cmd.id
-            return
-        }
 
         Order order = Order.get(cmd.id)
 
@@ -61,7 +62,8 @@ class OrderController {
         order.payment    = cmd.payment    ?: order.payment
         order.status     = cmd.status     ?: order.status
 
-        if (cmd.items || cmd.newItems) {
+
+        if (cmd.items) {
             def exists = (cmd.items - null).inject([:]) { acc, item -> acc << [(item.id): item] }
 
             // Remove
@@ -80,15 +82,25 @@ class OrderController {
             // Update items
             order.lines.each { item ->
                 item.properties = exists[item.id].properties
+                item.purchase.properties = exists[item.id].purchase.properties
+                item.sell.properties = exists[item.id].sell.properties
             }
 
+        }
+
+        if (cmd.newItems) {
             // Add new items
             cmd.newItems.each { item ->
                 OrderLine line = new OrderLine(item.properties)
                 line.product = Product.get(item.pid)
+                line.purchase = new LineBody(item.purchase.properties);
+                line.sell = new LineBody(item.sell.properties);
+
                 order.addToLines(line)
             }
         }
+
+        order.settle()
 
         if (order.save(flush: true)) {
             redirect action: "show", id: cmd.id
@@ -135,12 +147,11 @@ class OrderController {
 
 }
 
-class DetailsCommand {
+class LineBodyCommand {
     Float price
     Float tax
     Float shipping
     Float discount
-    Float total
 }
 
 class LineCommand {
@@ -149,18 +160,10 @@ class LineCommand {
     String pid
     String model
     Integer quantity
-    Float discountPrice
-
-    Float shippingFee
-    Float lineTotal
-    Float lineProfit
     String note
 
-    DetailsCommand purchase
-    DetailsCommand sell
-
-    static constraints = {
-    }
+    LineBodyCommand purchase
+    LineBodyCommand sell
 
 }
 
@@ -171,17 +174,11 @@ class OrderCommand {
     Float deliverFee
     String trackingNo
     String note
-    Float total
-    Float profit
     Float payment
     Integer status
 
     List<LineCommand> items
     List<LineCommand> newItems
-
-    static constraints = {
-        // importFrom Order, exclude: ["id"]
-    }
 
 }
 
