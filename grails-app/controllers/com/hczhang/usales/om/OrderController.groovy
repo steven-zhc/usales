@@ -142,7 +142,7 @@ class OrderController {
                 }
 
                 if (cmd.prodName) {
-                    lines.product.name =~ "%${cmd.prodName}%"
+                    lines?.product.name =~ "%${cmd.prodName}%"
                 }
             }
 

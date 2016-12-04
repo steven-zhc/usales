@@ -18,7 +18,7 @@ class UsalesController {
             }
         }
 
-        def statistics = new Statistics(count: r[0], total: r[1], profit: r[2], payment: r[3])
+        def statistics = new Statistics(count: r[0]?:0, total: r[1]?:0, profit: r[2]?:0, payment: r[3]?:0)
 
         def list = null
         if (status) {

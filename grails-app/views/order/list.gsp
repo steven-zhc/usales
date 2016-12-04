@@ -26,6 +26,7 @@
         <button type="button" onclick="location.href='/order/add'">Creat Order</button>
     </div>
     <div>
+        <g:if test="${orders}">
         <table>
             <thead>
                 <tr>
@@ -61,6 +62,7 @@
                 </g:each>
             </tbody>
         </table>
+        </g:if>
     </div>
 </body>
 </html>
