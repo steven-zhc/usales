@@ -9,7 +9,7 @@ class UsalesController {
     def index(Integer status) {
 
         def r = Order.createCriteria().get {
-            gt "status", 2
+            gt "status", 1
             projections {
                 count "id"
                 sum "total"

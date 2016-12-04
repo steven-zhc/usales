@@ -1,0 +1,28 @@
+
+#cards {
+    margin-bottom: 15px;
+    overflow: auto;
+}
+
+div.card {
+    width: 220px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    margin: 15px;
+    float: left;
+}
+
+div.card_header {
+    background: #A8CD1B;
+    color: white;
+    padding: 10px;
+    font-size: 38px;
+}
+
+div.card_container {
+    padding: 10px;
+}
+
+#clear_div {
+    clear: left;
+}
