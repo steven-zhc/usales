@@ -36,7 +36,7 @@
         </tr>
         <g:each var="p" in="${products}">
             <tr>
-                <td>${p.name}</td>
+                <td><a href="/product/show/${p.id}">${p.name}</a></td>
                 <td>${p.category.name}</td>
                 <td>${p.listPrice}</td>
                 <td>

@@ -26,7 +26,7 @@ class ProductController {
         ["categories": Category.list()]
     }
 
-    def save(SaveProductCommand cmd) {
+    def save(ProductCommand cmd) {
 
         if (cmd.hasErrors()) {
             render view: "add", model: ["cmd": cmd]
@@ -47,10 +47,24 @@ class ProductController {
     def show() {
         Product p = Product.findById(params.id)
         if (p) {
-            ["product": p]
+            ["product": p, "categories": Category.list()]
         } else {
             ["message": "Not Found."]
         }
+    }
+
+    def update(ProductCommand cmd) {
+
+        Product p = Product.findById(cmd.pid)
+        p.properties = cmd.properties;
+
+        if (p.save(flush: true)) {
+            flash.message = "Updated Product successful."
+        } else {
+            flash.message = "Has some exceptions."
+        }
+
+        redirect action: "show", id: p.id
     }
 }
 
@@ -59,18 +73,14 @@ class SearchProductCommand {
     Integer cid
 }
 
-class SaveProductCommand {
+class ProductCommand {
+    Long pid
     String name
     String description
     // TODO: add upload pic later
     //String picPath
     Float listPrice
     Integer cid
-    String model
     String url
-
-    static constraints = {
-        importFrom Product
-    }
 
 }

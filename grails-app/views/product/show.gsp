@@ -11,39 +11,47 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
+    <form action="/product/update">
+        <g:if test="${product}">
+            <div>
+                <div>
+                    <label>Product Name</label>
+                    <input type="text" name="name" value="${product.name}">
+                    <input type="hidden" name="pid" value="${product.id}">
+                </div>
 
-    <g:if test="${product}">
+                <div>
+                    <label>Category</label>
+                    <g:select name="cid" optionKey="id" optionValue="name" from="${categories}"
+                        value="${product.category.id}"
+                        noSelection="${['':'Select One...']}"/>
+                </div>
+
+                <div>
+                    <label>List Price</label>
+                    <input type="text" name="listPrice" value="${product.listPrice}">
+                </div>
+
+                <div>
+                    <label>Product URL</label>
+                    <input type="text" name="url" value="${product.url}">
+                </div>
+
+                <div>
+                    <label>Description</label>
+                    <textArea name="description">${product.description}</textArea>
+                </div>
+            </div>
+        </g:if>
+
         <div>
-            <div>
-                <span>Product Name</span>
-                <div>${product.name}</div>
-            </div>
-
-            <div>
-                <span>Category</span>
-                <div>${product.category.name}</div>
-            </div>
-
-            <div>
-                <span>List Price</span>
-                <div>${product.listPrice}</div>
-            </div>
-
-            <div>
-                <span>Product URL</span>
-                <div><a href="${product.url}">${product.url}</a></div>
-            </div>
-
-            <div>
-                <span>Description</span>
-                <div>${product.description}</div>
-            </div>
+            <button type="submit">Save</button>
+            <button type="button" onclick="window.location='/product/add'">New Product</button>
         </div>
-    </g:if>
-
-    <div>
-        <a href="/product/add">New Product</a>
-    </div>
+    </form>
 </section>
+<script>
+
+</script>
 </body>
 </html>
