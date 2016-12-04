@@ -13,11 +13,11 @@
             <input type="text" name="prodName" value="${cmd?.prodName}"/>
             <select name="status">
                 <option value="">Select one status ...</option>
-                <option value="1">${message(code:'order.status.value.1')}</option>
-                <option value="2">${message(code:'order.status.value.2')}</option>
-                <option value="3">${message(code:'order.status.value.3')}</option>
-                <option value="4">${message(code:'order.status.value.4')}</option>
-                <option value="0">${message(code:'order.status.value.0')}</option>
+                <option value="1" ${cmd?.status == 1 ? "selected" : ''}>${message(code:'order.status.value.1')}</option>
+                <option value="2" ${cmd?.status == 2 ? "selected" : ''}>${message(code:'order.status.value.2')}</option>
+                <option value="3" ${cmd?.status == 3 ? "selected" : ''}>${message(code:'order.status.value.3')}</option>
+                <option value="4" ${cmd?.status == 4 ? "selected" : ''}>${message(code:'order.status.value.4')}</option>
+                <option value="0" ${cmd?.status == 0 ? "selected" : ''}>${message(code:'order.status.value.0')}</option>
             </select>
             <button type="submit">Search</button>
         </form>
