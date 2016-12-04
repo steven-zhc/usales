@@ -159,7 +159,7 @@ function addOrderLine(prods) {
 
     var str = '<div class="order_line">' + 
         '<table class="item_header">' + 
-        '<tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Note</td><td></td></tr>' + 
+        '<tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Model</td><td>Note</td><td></td></tr>' + 
         '<tr>' + 
         '<td><select name="newItems[0].name" onchange="productChanged.apply(this);">' + 
         '<option value="">Select one product ...</option>'  + optionlist +
@@ -168,6 +168,7 @@ function addOrderLine(prods) {
         '<td><input type="number" name="newItems[' + count + '].quantity" value="1" min="1" max="1000" onchange="quantityChanged.apply(this);" /> </td>' + 
         '<td class="item_total">0.0</td>' + 
         '<td class="item_profit">0.0</td>' + 
+        '<td><input type="text" name="items[' + count + '].model" /></td>' + 
         '<td><input type="text" name="newItems[' + count + '].note" /></td>' + 
         '<td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>' + 
         '</tr></table>' + 

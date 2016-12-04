@@ -91,7 +91,7 @@
             <div class="order_line">
                 <input type="hidden" name="items[${i}].id" value="${l.id}"/>
                 <table class="item_header">
-                    <tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Note</td><td></td></tr>
+                    <tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Model</td><td>Note</td><td></td></tr>
                     <tr>
                         <td>
                             ${l.product.name}
@@ -101,6 +101,7 @@
                         <td><input type="number" name="items[${i}].quantity" value="${l.quantity}" min="1" max="1000" onchange="quantityChanged.apply(this);" /> </td>
                         <td class="item_total">0.0</td>
                         <td class="item_profit">0.0</td>
+                        <td><input type="text" name="items[${i}].model" value="${l.model}" /></td>
                         <td><input type="text" name="items[${i}].note" value="${l.note}" /></td>
                         <td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>
                     </tr>
@@ -144,13 +145,14 @@
             <g:each var="l" in="${order.lines}" status="i">
             <div class="order_line">
                 <table class="item_header">
-                    <tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Note</td><td></td></tr>
+                    <tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Model</td><td>Note</td><td></td></tr>
                     <tr>
                         <td>${l.product.name}</td>
                         <td>${l.product.listPrice}</td>
                         <td>${l.quantity}</td>
                         <td class="item_total">0.0</td>
                         <td class="item_profit">0.0</td>
+                        <td>${l.model}</td>
                         <td>${l.note}</td>
                         <td></td>
                     </tr>
