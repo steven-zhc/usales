@@ -133,30 +133,26 @@ class OrderController {
         }
     }
 
-    def list() {
-        ["orders": Order.list()]
-    }
+    def list(SearchOrderCommand cmd) {
 
-    def search(SearchOrderCommand cmd) {
-        if (cmd.hasErrors()) {
-            render view: "list", model: ["orders": Order.list()]
-            return
-        }
+        if (cmd.status || cmd.prodName) {
+            def list = Order.where {
+                if (cmd.status) {
+                    status == cmd.status
+                }
 
-        def list = Product.where {
-            name =~ "%${cmd.prodName}%"
-        }.list().inject([]) { acc, prod ->
-            acc << Order.withCriteria {
-                lines {
-                    eq("product", prod)
+                if (cmd.prodName) {
+                    lines.product.name =~ "%${cmd.prodName}%"
                 }
             }
-        }.flatten().toSet()
 
-        render view: "list", model: ["cmd": cmd, "orders": list]
+            ["cmd": cmd, "orders": list]
+        } else {
+            ["orders": Order.list()]
+        }
+
 
     }
-
 }
 
 class LineBodyCommand {
@@ -196,6 +192,7 @@ class OrderCommand {
 
 class SearchOrderCommand {
     String prodName
+    Integer status
 
     static constraints = {
 

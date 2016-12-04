@@ -8,9 +8,17 @@
 <body>
     <h1>Order List</h1>
     <div>
-        <form action="/order/search">
+        <form action="/order/list">
             <span>Product Name</span>
             <input type="text" name="prodName" value="${cmd?.prodName}"/>
+            <select name="status">
+                <option value="">Select one status ...</option>
+                <option value="1">${message(code:'order.status.value.1')}</option>
+                <option value="2">${message(code:'order.status.value.2')}</option>
+                <option value="3">${message(code:'order.status.value.3')}</option>
+                <option value="4">${message(code:'order.status.value.4')}</option>
+                <option value="0">${message(code:'order.status.value.0')}</option>
+            </select>
             <button type="submit">Search</button>
         </form>
     </div>
