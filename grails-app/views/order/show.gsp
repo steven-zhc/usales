@@ -32,7 +32,7 @@
         <g:if test="${order.status == 1}">
             <button type="submit" name="status" value="0">Cancel</button>
             <button type="submit" name="status" value="2">Checkout</button>
-            <div><input type="text" name="note">${order.note}</input></div>
+            <div><input type="text" name="note" value="${order.note}"/></div>
         </g:if>
         <g:elseif test="${order.status == 2}" >
             
@@ -48,7 +48,7 @@
                 <input type="text" id="trackingNo" name="trackingNo" value="${order.trackingNo}"/>
             </div>
             
-            <div><input type="text" name="note">${order.note}</input></div>
+            <div><input type="text" name="note" value="${order.note}"/></div>
         </g:elseif>
         <g:elseif test="${order.status == 3}" >
             <input type="text" name="payment" value="0.0" />
@@ -62,7 +62,7 @@
                 <span>${order.trackingNo}</span>
             </div>
 
-            <div><input type="text" name="note">${order.note}</input></div>
+            <div><input type="text" name="note" value="${order.note}"/></div>
         </g:elseif>
         <g:elseif test="${order.status == 4}">
             <div>${order.note}</div>
@@ -84,6 +84,9 @@
             <button type="button" id="add_line_btn">+</button>
             <button type="submit">Save</button>
         </g:if>
+        <g:elseif test="${order.status in 2..4}">
+            <button type="submit">Save</button>
+        </g:elseif>
 
         <div id="items">
         <g:if test="${order.status == 1}">    

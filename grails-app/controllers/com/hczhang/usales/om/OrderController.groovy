@@ -61,6 +61,7 @@ class OrderController {
         order.trackingNo = cmd.trackingNo ?: order.trackingNo
         order.payment    = cmd.payment    ?: order.payment
         order.status     = cmd.status     ?: order.status
+        order.note       = cmd.note       ?: order.note
 
 
         if (cmd.items) {
