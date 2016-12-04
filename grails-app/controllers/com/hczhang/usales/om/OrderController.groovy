@@ -90,7 +90,7 @@ class OrderController {
 
         if (cmd.newItems) {
             // Add new items
-            cmd.newItems.each { l ->
+            (cmd.newItems - null).each { l ->
                 if (l.pid != null) {
                     def line = new OrderLine(
                             product: Product.get(l.pid),
