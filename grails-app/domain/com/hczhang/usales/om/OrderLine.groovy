@@ -20,7 +20,7 @@ class OrderLine {
     LineBody purchase
     LineBody sell
 
-    static embedded = ['purchase', 'sell']
+//    static embedded = ['purchase', 'sell']
     static belongsTo = [order : Order]
 
     static constraints = {
@@ -67,6 +67,8 @@ class LineBody {
     Float shipping
     Float discount
     Float total
+
+    static belongsTo = [header : OrderLine]
 
     void settle(int quantity) {
         total = (price * quantity).round(2) + tax + shipping + discount

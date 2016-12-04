@@ -17,6 +17,7 @@ class Order {
 
     Float payment
 
+    List lines
     static hasMany = [lines : OrderLine]
 
     static constraints = {

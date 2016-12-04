@@ -50,7 +50,7 @@ class OrderController {
             return
         }
 
-        render view: "add", model: ["order": order, "products": getProductsJSON()]
+        render view: "add", model: ["order": cmd, "products": getProductsJSON()]
     }
 
     def update(OrderCommand cmd) {
@@ -90,13 +90,18 @@ class OrderController {
 
         if (cmd.newItems) {
             // Add new items
-            cmd.newItems.each { item ->
-                OrderLine line = new OrderLine(item.properties)
-                line.product = Product.get(item.pid)
-                line.purchase = new LineBody(item.purchase.properties);
-                line.sell = new LineBody(item.sell.properties);
-
-                order.addToLines(line)
+            cmd.newItems.each { l ->
+                if (l.pid != null) {
+                    def line = new OrderLine(
+                            product: Product.get(l.pid),
+                            quantity: l.quantity,
+                            model: l.model,
+                            note: l.note,
+                            purchase: new LineBody(l.purchase.properties),
+                            sell: new LineBody(l.sell.properties)
+                    )
+                    order.addToLines(line)
+                }
             }
         }
 

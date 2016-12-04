@@ -38,4 +38,40 @@ class OrderSpec extends Specification {
         1 == order.lines.size()
 
     }
+
+    void "Remove an Order Line from Order"() {
+        given: "A Order"
+
+        def order = new Order(total: 100, profit: 10, note: "unit test")
+
+        OrderLine line = new OrderLine(
+                product: new Product(name: "GNC"),
+                quantity: 1,
+                lineTotal: 100,
+                lineProfit: 10,
+                purchase: new LineBody(price: 90, tax: 0, shipping: 0, discount: 0, total: 90),
+                sell: new LineBody(price: 100, tax: 0, shipping: 0, discount: 0, total: 100)
+        )
+        order.addToLines(line)
+
+        line = new OrderLine(
+                product: new Product(name: "Burberry"),
+                quantity: 1,
+                lineTotal: 100,
+                lineProfit: 10,
+                purchase: new LineBody(price: 90, tax: 0, shipping: 0, discount: 0, total: 90),
+                sell: new LineBody(price: 100, tax: 0, shipping: 0, discount: 0, total: 100)
+        )
+        order.addToLines(line)
+
+        order.settle()
+
+        order.save(failOnError: true)
+
+        when: "Delete one Line from Order"
+        order.removeFromLines(line)
+
+        then: "The order should still have one Order Line"
+        1 == order.lines.size()
+    }
 }
