@@ -29,6 +29,7 @@ class Order {
     static mapping = {
         table '`order`'
 
+        lines lazy: false
         status column: '`status`'
     }
 
