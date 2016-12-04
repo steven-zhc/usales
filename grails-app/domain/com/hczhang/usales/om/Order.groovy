@@ -37,6 +37,10 @@ class Order {
         this.lines.each { i -> i.settle() }
         this.total = this.lines.inject(0.0) { acc, line -> acc + line.lineTotal }
         this.profit = this.lines.inject(0.0) { acc, line -> acc + line.lineProfit }
+
+        if (deliverFee) {
+            this.total += this.deliverFee
+        }
     }
 
     @Override

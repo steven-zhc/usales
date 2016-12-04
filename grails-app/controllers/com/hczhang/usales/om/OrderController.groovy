@@ -110,7 +110,9 @@ class OrderController {
             }
         }
 
-        order.settle()
+        if (order.status == 3) {
+            order.settle()
+        }
 
         if (order.save(flush: true)) {
             redirect action: "show", id: cmd.id

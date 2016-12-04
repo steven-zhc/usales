@@ -54,11 +54,11 @@
             <input type="text" name="payment" value="0.0" />
             <button type="submit" name="status" value="4">Pay off</button>
             <div>
-                <span>Deliver Fee</span>
+                <label>Deliver Fee</span>
                 <span>${order.deliverFee}</span>
             </div>
             <div>
-                <span>Tracking #</span>
+                <label>Tracking #</span>
                 <span>${order.trackingNo}</span>
             </div>
 
@@ -67,24 +67,29 @@
         <g:elseif test="${order.status == 4}">
             <div>${order.note}</div>
             <div>
-                <span>Payment</span><span>${order.payment}</span>
+                <label>Deliver Fee</span>
+                <span>${order.deliverFee}</span>
+            </div>
+            <div>
+                <label>Payment</label>
+                <span>${order.payment}</span>
             </div>
         </g:elseif>
         
         <div>
-            <label for="order_total">Order Total</label>
-            <span id="order_total">0.0</span>
+            <label>Order Total</label>
+            <span>${order.total}</span>
         </div>
         <div>
-            <label for="order_profit">Order Profit</label>
-            <span id="order_profit">0.0</span>
+            <label>Order Profit</label>
+            <span>${order.profit}</span>
         </div>
         
         <g:if test="${order.status == 1}">
             <button type="button" id="add_line_btn">+</button>
             <button type="submit">Save</button>
         </g:if>
-        <g:elseif test="${order.status in 2..4}">
+        <g:elseif test="${order.status in 2..3}">
             <button type="submit">Save</button>
         </g:elseif>
 
@@ -212,17 +217,20 @@ $( function() {
         addOrderLine(products);
     });
 
-    $(".item_purchase").each(function () {
-        updateBodySection($(this));
-    });
-    $(".item_sell").each(function() {
-        updateBodySection($(this));
-    });
-    $(".order_line").each(function() {
-        updateItem($(this));
-    });
+    if (${order.status} == 1) {
 
-    updateOrder();
+        $(".item_purchase").each(function () {
+            updateBodySection($(this));
+        });
+        $(".item_sell").each(function() {
+            updateBodySection($(this));
+        });
+        $(".order_line").each(function() {
+            updateItem($(this));
+        });
+
+        updateOrder();
+    }
 
 });
 
