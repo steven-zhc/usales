@@ -81,7 +81,11 @@ class OrderController {
 
             // Update items
             order.lines.each { item ->
-                item.properties = exists[item.id].properties
+                def u = exists[item.id]
+                item.quantity = u.quantity
+                item.model = u.model
+                item.note = u.note
+
                 item.purchase.properties = exists[item.id].purchase.properties
                 item.sell.properties = exists[item.id].sell.properties
             }
