@@ -83,4 +83,8 @@ class ProductCommand {
     Integer cid
     String url
 
+    static constraints = {
+        cid nullable: false
+        name nullable: false
+    }
 }

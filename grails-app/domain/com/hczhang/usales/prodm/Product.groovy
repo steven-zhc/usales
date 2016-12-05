@@ -11,7 +11,7 @@ class Product {
     Category category
 
     static constraints = {
-        name nullable: false, size: 2..150
+        name nullable: false, size: 2..255
         description size: 2..255
         url size: 1..255
     }
