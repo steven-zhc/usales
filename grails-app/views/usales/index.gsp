@@ -16,7 +16,7 @@
                 <div class="card_container"><p>Order</p></div>
             </div>
             <div class="card">
-                <div class="card_header"><h1>${statistics.total}</h1></div>
+                <div class="card_header"><h1>$${statistics.total}</h1></div>
                 <div class="card_container"><p>Total</p></div>
             </div>
             <div class="card">
