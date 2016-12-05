@@ -47,8 +47,13 @@
                     <td>${message(code: 'order.status.value.' + fieldValue(bean: o, field: "status"))}</td>
                     <td>${o.dateCreated.format('MM/dd/yyyy')}</td>
                     <td>
-                        <g:each var="line" in="${o.lines}" status="j">
-                            ${line.product.name}
+                        <g:each var="l" in="${o.lines}" status="j">
+                            <g:if test="${l.product.url}">
+                                <a href="${l.product.url}">${l.product.name}</a>
+                            </g:if>
+                            <g:else>
+                                ${l.product.name}
+                            </g:else>
                             <g:if test="${j != o.lines.size() - 1}">
                                 <br/>
                             </g:if> 

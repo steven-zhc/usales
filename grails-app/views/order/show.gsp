@@ -102,7 +102,12 @@
                     <tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Model</td><td>Note</td><td></td></tr>
                     <tr>
                         <td>
-                            ${l.product.name}
+                            <g:if test="${l.product.url}">
+                                <a href="${l.product.url}">${l.product.name}</a>
+                            </g:if>
+                            <g:else>
+                                ${l.product.name}
+                            </g:else>
                             <input type="hidden" name="items[${i}].pid" value="${l.product.id}"/>
                         </td>
                         <td>${l.product.listPrice}</td>
