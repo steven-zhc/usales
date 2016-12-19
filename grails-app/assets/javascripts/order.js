@@ -61,12 +61,26 @@ function quantityChanged() {
     unitPriceChanged.apply(sellTr.find("td:nth-child(2) input"));
 }
 
+function updateRate(table) {
+
+    var purchasePrice = table.find(".purchase_price");
+    var sellPrice     = table.find(".sell_price");
+    var rateTag       = table.find(".rate");
+
+    var purchase = parseFloat(purchasePrice.val());
+    var sell = parseFloat(sellPrice.val());
+
+    var rate = (sell - purchase) / purchase * 100;
+
+    rateTag.val(rate.toFixed(0));
+}
+
 // Update item header
 function updateItem(line) {
     var headerTable = line.children(".item_header");
     var totalTag    = headerTable.find(".item_total");
     var profitTag   = headerTable.find(".item_profit");
-
+    
     var bodyTable        = line.children(".item_body");
     var purchaseTotalTag = bodyTable.find(".total_purchase");
     var sellTotalTag     = bodyTable.find(".total_sell");
@@ -75,11 +89,27 @@ function updateItem(line) {
     var sellTotal     = parseFloat(sellTotalTag.text());
     var profit        = sellTotal - purchaseTotal;
 
+    updateRate(bodyTable);
+
     totalTag.text(sellTotal.toFixed(2));
     profitTag.text(profit.toFixed(2));
 
     updateOrder();
 }
+
+function rateChanged() {
+    var rate = $(this).val();
+
+    var table = $(this).parentsUntil("table");
+    var purchasePriceTag = table.find(".purchase_price");
+    var sellPriceTag = table.find(".sell_price");
+
+    var purchasePrice = purchasePriceTag.val();
+    var sellPrice = purchasePrice * (1 + rate / 100);
+    sellPriceTag.val(sellPrice.toFixed(2));
+
+    unitPriceChanged.apply(sellPriceTag);
+} 
 
 function productChanged() {
     var pid = $(this).val();
@@ -111,17 +141,6 @@ function productChanged() {
         bodyTable.show();
     }
 }
-
-// function updateRate() {
-//     var v = parseFloat($(this).val());
-//     var rate = 1.0 +  v / 100;
-//     var discount = parseFloat($(this).parent().prev().children("input").val());
-//     var sellPriceTag = $(this).parent().next().children("input");
-
-//     sellPriceTag.val((discount * rate).toFixed(2));
-
-//     settleAccount($(this).parent().parent());
-// }
 
 // Order functions
 // ------------------------------------------------------------------------
@@ -176,16 +195,16 @@ function addOrderLine(prods) {
         '<tr><td></td><td>Unit Price</td><td>Quantity</td><td>Tax</td><td>Discount</td><td>Shipping</td><td>Total</td></tr>' + 
         '<tr class="item_purchase">' + 
         '<td>Purchase</td>' + 
-        '<td><input type="text" name="newItems[' + count + '].purchase.price" value="0.0" onchange="unitPriceChanged.apply(this);"/></td>' + 
+        '<td><input type="text" name="newItems[' + count + '].purchase.price" value="0.0" onchange="unitPriceChanged.apply(this);" class="purchase_price"/></td>' + 
         '<td>1</td>' + 
         '<td><input type="text" name="newItems[' + count + '].purchase.tax" value="0.0" onchange="numValueChanged.apply(this);"/></td>' + 
         '<td><input type="text" name="newItems[' + count + '].purchase.discount" value="-0.0" onchange="numValueChanged.apply(this);"/></td>' + 
         '<td><input type="text" name="newItems[' + count + '].purchase.shipping" value="0.0" onchange="numValueChanged.apply(this);"/></td>' + 
         '<td class="total_purchase">0.0</td>' + 
-        '</tr><tr><td></td><td><input type="text" size="2"></td><td></td><td></td><td></td><td></td><td></td></tr>' + 
+        '</tr><tr><td></td><td><input type="text" size="2" class="rate" onchange="rateChanged.apply(this);"></td><td></td><td></td><td></td><td></td><td></td></tr>' + 
         '<tr class="item_sell">' + 
         '<td>Sell</td>' + 
-        '<td><input type="text" name="newItems[' + count + '].sell.price" value="0.0" onchange="unitPriceChanged.apply(this);"></td>' + 
+        '<td><input type="text" name="newItems[' + count + '].sell.price" value="0.0" onchange="unitPriceChanged.apply(this);" class="sell_price"></td>' + 
         '<td>1</td>' + 
         '<td><input type="text" name="newItems[' + count + '].sell.tax" value="0.0" onchange="numValueChanged.apply(this);"></td>' + 
         '<td><input type="text" name="newItems[' + count + '].sell.discount" value="-0.0" onchange="numValueChanged.apply(this);"/></td>' + 
