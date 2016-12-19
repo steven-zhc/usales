@@ -201,7 +201,7 @@ function addOrderLine(prods) {
         '<td><input type="text" name="newItems[' + count + '].purchase.discount" value="-0.0" onchange="numValueChanged.apply(this);"/></td>' + 
         '<td><input type="text" name="newItems[' + count + '].purchase.shipping" value="0.0" onchange="numValueChanged.apply(this);"/></td>' + 
         '<td class="total_purchase">0.0</td>' + 
-        '</tr><tr><td></td><td><input type="text" size="2" class="rate" onchange="rateChanged.apply(this);"></td><td></td><td></td><td></td><td></td><td></td></tr>' + 
+        '</tr><tr><td></td><td><input type="text" size="2" class="rate" onchange="rateChanged.apply(this);"/>%</td><td></td><td></td><td></td><td></td><td></td></tr>' + 
         '<tr class="item_sell">' + 
         '<td>Sell</td>' + 
         '<td><input type="text" name="newItems[' + count + '].sell.price" value="0.0" onchange="unitPriceChanged.apply(this);" class="sell_price"></td>' + 
