@@ -23,6 +23,9 @@
                 <li><a href="/order">Order</a></li>
             </ul>
         </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">USD -> CNY <span id="currency_exchange">N/A</span></a></li>
+        </ul>
     </nav>
 
     <g:layoutBody/>
@@ -35,5 +38,15 @@
 
     <asset:javascript src="application.js"/>
 
+<script>
+var url = "http://api.fixer.io/latest?base=USD&symbols=CNY";
+
+$( function() {
+    $.getJSON(url, function(result) {
+        $("#currency_exchange").text(result.rates.CNY);
+    });
+});
+
+</script>
 </body>
 </html>
