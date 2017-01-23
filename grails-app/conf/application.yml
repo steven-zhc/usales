@@ -89,24 +89,18 @@ dataSource:
     pooled: true
     jmxExport: true
     driverClassName: com.mysql.jdbc.Driver
-    username: usales_user
-    password: Welcome1
 
 environments:
     development:
         dataSource:
-#            dbCreate: create-drop
             dbCreate: update
             url: jdbc:mysql://localhost:3306/usales_dev
+            username: usales_user
+            password: Welcome1
             logSql: true
-    test:
-        dataSource:
-            dbCreate: create-drop
-            url: jdbc:mysql://192.168.1.2:3306/usales_test
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://localhost:3306/usales
             properties:
                 jmxEnabled: true
                 initialSize: 5

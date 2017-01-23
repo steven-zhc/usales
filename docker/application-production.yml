@@ -1,0 +1,7 @@
+environments:
+    production:
+        dataSource:
+            dbCreate: update
+            url: jdbc:mysql://172.17.0.1:3306/usales
+            username: usales_user
+            password: Welcome1
