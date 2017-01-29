@@ -7,7 +7,7 @@
 <!-- /TOC -->
 
 # usales
-(https://travis-ci.org/steven-zhc/usales-ugly.svg?branch=master)
+![Build Status](https://travis-ci.org/steven-zhc/usales-ugly.svg?branch=master)
 A mini sales system. A tech demo.
 
 # Roadmap (Draft)
