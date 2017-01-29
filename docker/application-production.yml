@@ -1,7 +1,8 @@
+# This is a demo of runtime configuration
 environments:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://172.17.0.1:3306/usales
+            url: jdbc:mysql://172.17.0.1:3306/usales?useUnicode=true&characterEncoding=UTF-8
             username: usales_user
             password: Welcome1
