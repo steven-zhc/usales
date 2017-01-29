@@ -16,6 +16,7 @@ class OrderSpec extends Specification {
     def cleanup() {
     }
 
+    /*
     void "Add Order, Order Line, Order Body"() {
         given: "A new Order"
         def prod = new Product(name: "GNC")
@@ -74,4 +75,5 @@ class OrderSpec extends Specification {
         then: "The order should still have one Order Line"
         1 == order.lines.size()
     }
+    */
 }
