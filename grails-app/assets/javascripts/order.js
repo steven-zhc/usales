@@ -187,7 +187,7 @@ function addOrderLine(prods) {
         '<td><input type="number" name="newItems[' + count + '].quantity" value="1" min="1" max="1000" onchange="quantityChanged.apply(this);" /> </td>' + 
         '<td class="item_total">0.0</td>' + 
         '<td class="item_profit">0.0</td>' + 
-        '<td><input type="text" name="items[' + count + '].model" /></td>' + 
+        '<td><input type="text" name="newItems[' + count + '].model" /></td>' + 
         '<td><input type="text" name="newItems[' + count + '].note" /></td>' + 
         '<td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>' + 
         '</tr></table>' + 

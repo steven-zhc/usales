@@ -77,12 +77,12 @@
         </g:elseif>
         
         <div>
-            <label>Order Total</label>
-            <span>${order.total}</span>
+            <label for="order_total">Order Total</label>
+            <span id="order_total">${order.total}</span>
         </div>
         <div>
-            <label>Order Profit</label>
-            <span>${order.profit}</span>
+            <label for="order_profit">Order Profit</label>
+            <span id="order_profit">${order.profit}</span>
         </div>
         
         <g:if test="${order.status == 1}">
@@ -112,8 +112,8 @@
                         </td>
                         <td>${l.product.listPrice}</td>
                         <td><input type="number" name="items[${i}].quantity" value="${l.quantity}" min="1" max="1000" onchange="quantityChanged.apply(this);" /> </td>
-                        <td class="item_total">0.0</td>
-                        <td class="item_profit">0.0</td>
+                        <td class="item_total">${l.lineTotal}</td>
+                        <td class="item_profit">${l.lineProfit}</td>
                         <td><input type="text" name="items[${i}].model" value="${l.model}" /></td>
                         <td><input type="text" name="items[${i}].note" value="${l.note}" /></td>
                         <td><button type="button" onclick="deleteLine.apply(this)">Remove</button></td>
@@ -131,19 +131,19 @@
                     </tr>
                     <tr class="item_purchase">
                         <td>Purchase</td>
-                        <td><input type="text" name="items[${i}].purchase.price" value="${l.purchase.price}" onchange="unitPriceChanged.apply(this);"/></td>
+                        <td><input type="text" name="items[${i}].purchase.price" value="${l.purchase.price}" onchange="unitPriceChanged.apply(this);" class="purchase_price"/></td>
                         <td>${l.quantity}</td>
                         <td><input type="text" name="items[${i}].purchase.tax" value="${l.purchase.tax}" onchange="numValueChanged.apply(this);"/></td>
-                        <td><input type="text" name="items[${i}].purchase.discount" value="${l.purchase.discount}" value="-0.0" onchange="numValueChanged.apply(this);"/></td>
+                        <td><input type="text" name="items[${i}].purchase.discount" value="${l.purchase.discount}" onchange="numValueChanged.apply(this);"/></td>
                         <td><input type="text" name="items[${i}].purchase.shipping" value="${l.purchase.shipping}" onchange="numValueChanged.apply(this);"/></td>
                         <td class="total_purchase">0.0</td>
                     </tr>
                     <tr>
-                        <td></td><td><input type="text" size="2"></td><td></td><td></td><td></td><td></td><td></td>
+                        <td></td><td><input type="text" size="2" class="rate" onchange="rateChanged.apply(this);"/>%</td><td></td><td></td><td></td><td></td><td></td>
                     </tr>
                     <tr class="item_sell">
                         <td>Sell</td>
-                        <td><input type="text" name="items[${i}].sell.price" value="${l.sell.price}"  onchange="unitPriceChanged.apply(this);"></td>
+                        <td><input type="text" name="items[${i}].sell.price" value="${l.sell.price}"  onchange="unitPriceChanged.apply(this);" class="sell_price"></td>
                         <td>${l.quantity}</td>
                         <td><input type="text" name="items[${i}].sell.tax" value="${l.sell.tax}" onchange="numValueChanged.apply(this);"></td>
                         <td><input type="text" name="items[${i}].sell.discount" value="${l.sell.discount}" value="-0.0" onchange="numValueChanged.apply(this);"/></td>
@@ -163,8 +163,8 @@
                         <td>${l.product.name}</td>
                         <td>${l.product.listPrice}</td>
                         <td>${l.quantity}</td>
-                        <td class="item_total">0.0</td>
-                        <td class="item_profit">0.0</td>
+                        <td class="item_total">${l.lineTotal}</td>
+                        <td class="item_profit">${l.lineProfit}</td>
                         <td>${l.model}</td>
                         <td>${l.note}</td>
                         <td></td>
@@ -187,10 +187,10 @@
                         <td>${l.purchase.tax}</td>
                         <td>${l.purchase.discount}</td>
                         <td>${l.purchase.shipping}</td>
-                        <td class="total_purchase">0.0</td>
+                        <td class="total_purchase">${l.purchase.total}</td>
                     </tr>
                     <tr>
-                        <td></td><td><input type="text" size="2"></td><td></td><td></td><td></td><td></td><td></td>
+                        <td></td><td>${Math.round((l.sell.price/l.purchase.price - 1)*100)}%</td><td></td><td></td><td></td><td></td><td></td>
                     </tr>
                     <tr class="item_sell">
                         <td>Sell</td>
@@ -199,7 +199,7 @@
                         <td>${l.sell.tax}</td>
                         <td>${l.sell.discount}</td>
                         <td>${l.sell.shipping}</td>
-                        <td class="total_sell">0.0</td>
+                        <td class="total_sell">${l.sell.total}</td>
                     </tr>
                 </table>
             </div>
