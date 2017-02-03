@@ -23,5 +23,5 @@ docker build -t usales-ugly .
 ## Running container
 
 - Windows
-    docker run --rm --name usales-ugly -v D:/Library/usales/application-production.yml:/app/application-production.yml -p 8080:8080 -d usales-ugly
+    docker run --rm --name usales-ugly -v D:/Library/usales/application-production.yml:/app/application-production.yml -p 8888:8080 -d usales-ugly
 - Linux/Mac
