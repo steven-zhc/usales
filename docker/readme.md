@@ -5,10 +5,20 @@ Running mysql
 # usales-ugly
 
 ## Initial workspace
-> cp ./../build/libs/*.war ./
+```bash
+rm ./docker/*.war
+gradle clean assemble
+cp ./build/libs/*.war ./docker
+```
 
 ## Build image
-> docker build -t usales-ugly .
+```bash
+docker stop usales-ugly
+docker rm usales-ugly
+docker rmi usales-ugly
+
+docker build -t usales-ugly .
+```
 
 ## Running container
 
