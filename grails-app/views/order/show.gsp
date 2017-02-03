@@ -99,7 +99,7 @@
             <div class="order_line">
                 <input type="hidden" name="items[${i}].id" value="${l.id}"/>
                 <table class="item_header">
-                    <tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Model</td><td>Note</td><td></td></tr>
+                    <tr class="label_row"><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Model</td><td>Note</td><td></td></tr>
                     <tr>
                         <td>
                             <g:if test="${l.product.url}">
@@ -120,7 +120,7 @@
                     </tr>
                 </table>
                 <table class="item_body">
-                    <tr>
+                    <tr class="label_row">
                         <td></td>
                         <td>Unit Price</td>
                         <td>Quantity</td>
@@ -158,7 +158,7 @@
             <g:each var="l" in="${order.lines}" status="i">
             <div class="order_line">
                 <table class="item_header">
-                    <tr><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Model</td><td>Note</td><td></td></tr>
+                    <tr class="label_row"><td>Product</td><td>List Price</td><td>Quantity</td><td>Total</td><td>Profit</td><td>Model</td><td>Note</td><td></td></tr>
                     <tr>
                         <td>${l.product.name}</td>
                         <td>${l.product.listPrice}</td>
@@ -171,8 +171,8 @@
                     </tr>
                 </table>
                 <table class="item_body">
-                    <tr>
-                        <td></td>
+                    <tr class="label_row">
+                        <td>${Math.round((l.sell.price/l.purchase.price - 1)*100)}%</td>
                         <td>Unit Price</td>
                         <td>Quantity</td>
                         <td>Tax</td>
@@ -188,9 +188,6 @@
                         <td>${l.purchase.discount}</td>
                         <td>${l.purchase.shipping}</td>
                         <td class="total_purchase">${l.purchase.total}</td>
-                    </tr>
-                    <tr>
-                        <td></td><td>${Math.round((l.sell.price/l.purchase.price - 1)*100)}%</td><td></td><td></td><td></td><td></td><td></td>
                     </tr>
                     <tr class="item_sell">
                         <td>Sell</td>
