@@ -153,6 +153,13 @@ class OrderController {
 
 
     }
+
+    def print() {
+        Order o = Order.findById(params.id)
+        if (o) {
+            ["order": o]
+        }
+    }
 }
 
 class LineBodyCommand {

@@ -13,6 +13,9 @@
     <h1>Order ID: ${order.id}</h1>
     <h3>${order.dateCreated.format('MM/dd/yyyy')} - ${message(code:'order.status.value.'+fieldValue(bean: order, field:
         "status"))}</h3>
+    <g:if test="${order.status > 1}">
+        <button type="button" onclick="window.open('/order/print/${order.id}')">Print</button>
+    </g:if>
 
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
