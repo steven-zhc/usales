@@ -1,6 +1,6 @@
 # MySQL
 Running mysql
-> docker run --name mysql -v D:/Library/usales/database:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=uadmin -p 3306:3306 -d mysql:latest
+> docker run --name mysql -v D:/Dropbox/Apps/usales/database:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=uadmin -p 3306:3306 -d mysql:latest
 
 # usales-ugly
 
